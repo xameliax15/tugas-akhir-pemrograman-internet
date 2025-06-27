@@ -135,7 +135,7 @@
         <a href="#">Tajwid</a>
     </div>
     <div class="top-bar">
-        <a href="#" class="btn">Data Pengguna</a>
+        <a href="<?php echo base_url('dashboard/pengguna'); ?>" class="btn">Data Pengguna</a>
         <a href="<?php echo base_url('auth/logout'); ?>" class="logout">Log Out</a>
     </div>
     <div class="center-bar">

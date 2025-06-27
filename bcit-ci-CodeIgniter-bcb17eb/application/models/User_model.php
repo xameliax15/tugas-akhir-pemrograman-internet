@@ -26,4 +26,8 @@ class User_model extends CI_Model {
     public function count_all() {
         return $this->db->count_all('pengguna');
     }
+
+    public function get_all() {
+        return $this->db->get('pengguna')->result_array();
+    }
 } 

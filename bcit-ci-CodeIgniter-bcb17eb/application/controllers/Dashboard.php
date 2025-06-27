@@ -33,4 +33,10 @@ class Dashboard extends CI_Controller {
         $data['huruf'] = $this->Hijaiyah_model->get_all();
         $this->load->view('hijaiyah_view', $data);
     }
+
+    public function pengguna() {
+        $this->load->model('User_model');
+        $data['pengguna'] = $this->User_model->get_all();
+        $this->load->view('pengguna_view', $data);
+    }
 } 
