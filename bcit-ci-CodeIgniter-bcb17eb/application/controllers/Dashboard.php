@@ -26,6 +26,9 @@ class Dashboard extends CI_Controller {
         $data['total_tanwin_dhommah'] = $this->Hijaiyah_model->count_by_kategori('Tanwin Dhommah');
         $data['total_tajwid'] = $this->Hijaiyah_model->count_by_kategori('Tajwid');
 
+        // Ambil data user yang login
+        $data['user'] = $this->session->userdata('user');
+
         $this->load->view('dashboard_view', $data);
     }
 
@@ -37,6 +40,20 @@ class Dashboard extends CI_Controller {
     public function pengguna() {
         $this->load->model('User_model');
         $data['pengguna'] = $this->User_model->get_all();
+        $data['user'] = $this->session->userdata('user');
         $this->load->view('pengguna_view', $data);
+    }
+
+    public function edit_pengguna($id = null) {
+        $this->load->model('User_model');
+        if ($this->input->method() === 'post') {
+            $nama = $this->input->post('nama');
+            $username = $this->input->post('username');
+            $this->User_model->update_user($id, $nama, $username);
+            redirect('dashboard/pengguna');
+        } else {
+            $data['pengguna'] = $this->User_model->get_by_id($id);
+            $this->load->view('edit_pengguna_view', $data);
+        }
     }
 } 

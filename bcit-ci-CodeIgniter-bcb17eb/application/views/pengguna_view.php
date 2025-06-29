@@ -1,78 +1,141 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Pengguna</title>
+    <title>Manajemen User</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; padding: 0; }
-        .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px; }
-        h2 { text-align: center; margin-bottom: 24px; }
-        .action-bar { display: flex; gap: 24px; justify-content: flex-start; margin-bottom: 24px; }
-        .action-btn {
-            background: #4a69bd;
-            color: #fff;
-            font-size: 1.2em;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            padding: 18px 36px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: background 0.2s;
-        }
-        .action-btn:disabled {
-            background: #b2bec3;
-            color: #fff;
-            cursor: not-allowed;
-        }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-        th, td { padding: 12px 14px; border: 1px solid #ddd; text-align: left; }
-        th { background: #4a69bd; color: #fff; font-size: 1.1em; }
-        tr:nth-child(even) { background: #f7f9fa; }
-        .aksi { text-align: center; }
-        .aksi-btn {
-            background: #f1f2f6;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 10px;
-            margin: 0 2px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background 0.2s;
-        }
-        .aksi-btn:hover { background: #dfe4ea; }
-        .back-link { display: inline-block; margin-top: 12px; color: #4a69bd; text-decoration: none; border: 1px solid #4a69bd; padding: 6px 16px; border-radius: 4px; }
-        .back-link:hover { background: #4a69bd; color: #fff; }
+        body { background: #f8fafc; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: #fff; border-right: 1px solid #e5e9f2; display: flex; flex-direction: column; justify-content: space-between; }
+        .sidebar .logo { font-size: 1.5em; font-weight: bold; color: #3b3f5c; padding: 32px 0 24px 32px; letter-spacing: 1px; }
+        .sidebar nav { flex: 1; }
+        .sidebar nav a { display: flex; align-items: center; padding: 14px 32px; color: #3b3f5c; text-decoration: none; font-size: 1.08em; border-left: 4px solid transparent; transition: background 0.2s, border 0.2s; margin-bottom: 2px; }
+        .sidebar nav a.active, .sidebar nav a:hover { background: #f0f4fa; border-left: 4px solid #4a69bd; color: #4a69bd; }
+        .sidebar .user-info { background: #f4f6fb; padding: 24px 32px; display: flex; align-items: center; gap: 16px; }
+        .sidebar .user-info .avatar { width: 44px; height: 44px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; color: #4a69bd; font-weight: bold; }
+        .sidebar .user-info .details { display: flex; flex-direction: column; }
+        .sidebar .user-info .details .name { font-weight: 600; color: #3b3f5c; }
+        .sidebar .user-info .details .role { font-size: 0.95em; color: #7b809a; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #f8fafc; }
+        .header { background: #fff; padding: 18px 36px; border-bottom: 1px solid #e5e9f2; display: flex; justify-content: space-between; align-items: center; }
+        .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
+        .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
+        .header .logout:hover { background: #c0392b; }
+        .main-user-container { max-width: 1100px; margin: 40px auto; }
+        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; }
+        .user-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .user-card-header h2 { margin: 0; font-size: 1.35em; color: #232946; }
+        .add-user-btn { background: #2563eb; color: #fff; font-weight: 500; border: none; border-radius: 7px; padding: 10px 22px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
+        .add-user-btn:hover { background: #1741a6; }
+        .user-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+        .user-table th, .user-table td { padding: 14px 10px; text-align: left; }
+        .user-table th { background: #f4f6fb; color: #232946; font-size: 1.05em; font-weight: 600; border-bottom: 2px solid #e5e9f2; }
+        .user-table tr:not(:last-child) { border-bottom: 1px solid #e5e9f2; }
+        .user-avatar { width: 38px; height: 38px; border-radius: 50%; background: #e3eafe; color: #4a69bd; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1em; margin-right: 12px; }
+        .user-info-cell { display: flex; align-items: center; }
+        .user-name { font-weight: 500; color: #232946; }
+        .user-email { font-size: 0.98em; color: #7b809a; }
+        .progress-bar-bg { background: #e5e9f2; border-radius: 8px; width: 90px; height: 8px; margin-right: 8px; display: inline-block; }
+        .progress-bar-fill { background: #22c55e; height: 8px; border-radius: 8px; display: inline-block; }
+        .status-badge { background: #d1fae5; color: #059669; border-radius: 8px; padding: 4px 16px; font-size: 0.98em; font-weight: 500; display: inline-block; }
+        .user-action-link { color: #2563eb; text-decoration: none; font-weight: 500; margin-right: 16px; cursor: pointer; }
+        .user-action-link:last-child { color: #ef4444; margin-right: 0; }
+        .user-action-link:hover { text-decoration: underline; }
+        @media (max-width: 900px) { .main-user-container, .user-card { padding: 0 2vw; } .user-card { padding: 18px 4vw 8px 4vw; } .user-table th, .user-table td { padding: 10px 4px; font-size: 0.98em; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Data Pengguna</h2>
-        <div class="action-bar">
-            <button class="action-btn">Tambah pengguna</button>
-            <button class="action-btn">Edit pengguna</button>
-            <button class="action-btn" disabled>Ubah password</button>
+<div class="dashboard-container">
+    <div class="sidebar">
+        <div>
+            <div class="logo">Admin Panel</div>
+            <nav>
+                <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
+                <a href="<?php echo site_url('dashboard/pengguna'); ?>" class="active">Manajemen User</a>
+                <a href="#">Konten Pembelajaran</a>
+                <a href="#">Analytics</a>
+                <a href="#">Laporan</a>
+                <a href="#">Pengaturan</a>
+            </nav>
         </div>
-        <table>
-            <tr>
-                <th style="width:40px;">#</th>
-                <th>Nama</th>
-                <th>Username</th>
-                <th style="width:120px; text-align:center;">Aksi</th>
-            </tr>
-            <?php $no=1; foreach($pengguna as $p): ?>
-            <tr>
-                <td><?= $no++; ?></td>
-                <td><?= htmlspecialchars($p['Nama']); ?></td>
-                <td><?= isset($p['Username']) ? htmlspecialchars($p['Username']) : htmlspecialchars($p['Nama']); ?></td>
-                <td class="aksi">
-                    <button class="aksi-btn" title="Edit"><span>&#9998;</span></button>
-                    <button class="aksi-btn" title="Ubah Password"><span>&#128273;</span></button>
-                    <button class="aksi-btn" title="Hapus"><span>&#128465;</span></button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <a href="<?php echo base_url('dashboard'); ?>" class="back-link">Kembali ke Dashboard</a>
+        <div class="user-info">
+            <div class="avatar">
+                <?php
+                $user_name = isset($user['Nama']) ? $user['Nama'] : 'Admin User';
+                $initial = strtoupper(substr($user_name, 0, 1));
+                echo $initial;
+                ?>
+            </div>
+            <div class="details">
+                <div class="name"><?php echo htmlspecialchars($user_name); ?></div>
+                <div class="role">Super Admin</div>
+            </div>
+        </div>
     </div>
+    <div class="main-content">
+        <div class="header">
+            <div class="title">Manajemen User</div>
+            <a href="<?php echo site_url('auth/logout'); ?>" class="logout">Log Out</a>
+        </div>
+        <div class="main-user-container">
+            <div class="user-card">
+                <div class="user-card-header">
+                    <h2>Manajemen User</h2>
+                    <button class="add-user-btn">+ Tambah User</button>
+                </div>
+                <table class="user-table">
+                    <tr>
+                        <th style="min-width:160px;">USER</th>
+                        <th>EMAIL</th>
+                        <th>PROGRESS</th>
+                        <th>STATUS</th>
+                        <th>BERGABUNG</th>
+                        <th>AKSI</th>
+                    </tr>
+                    <?php foreach($pengguna as $p): ?>
+                    <tr>
+                        <td>
+                            <div class="user-info-cell">
+                                <div class="user-avatar">
+                                    <?php
+                                    $nama = isset($p['Nama']) ? $p['Nama'] : 'User';
+                                    $nama_parts = explode(' ', $nama);
+                                    $initials = strtoupper(substr($nama_parts[0],0,1));
+                                    if(count($nama_parts)>1) $initials .= strtoupper(substr($nama_parts[1],0,1));
+                                    echo $initials;
+                                    ?>
+                                </div>
+                                <div>
+                                    <div class="user-name"><?= htmlspecialchars($nama); ?></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="user-email">
+                            <?php
+                            // Dummy email based on name
+                            $email = strtolower(str_replace(' ', '.', $nama)) . '@email.com';
+                            echo htmlspecialchars($email);
+                            ?>
+                        </td>
+                        <td>
+                            <div style="display:flex;align-items:center;">
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width:<?= rand(40,100); ?>%;"></div>
+                                </div>
+                                <span style="font-size:0.97em; color:#232946; font-weight:500;"><?= rand(10,28); ?>/28 huruf</span>
+                            </div>
+                        </td>
+                        <td><span class="status-badge">Aktif</span></td>
+                        <td><?= date('d M Y', strtotime('-'.rand(1,30).' days')); ?></td>
+                        <td>
+                            <a class="user-action-link" href="<?php echo site_url('dashboard/edit_pengguna/' . $p['P_id']); ?>">Edit</a>
+                            <a class="user-action-link" href="#" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html> 
