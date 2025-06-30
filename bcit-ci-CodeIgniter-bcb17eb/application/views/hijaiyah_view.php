@@ -50,7 +50,7 @@
                     <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
                     <a href="<?php echo site_url('dashboard/hijaiyah'); ?>" class="active">Konten Pembelajaran</a>
                     <a href="#">Analytics</a>
-                    <a href="#">Laporan</a>
+                    <a href="<?php echo site_url('dashboard/laporan'); ?>">Laporan</a>
                     <a href="#">Pengaturan</a>
                 </nav>
             </div>

@@ -26,6 +26,11 @@ class Dashboard extends CI_Controller {
         $data['total_tanwin_dhommah'] = $this->Hijaiyah_model->count_by_kategori('Tanwin Dhommah');
         $data['total_tajwid'] = $this->Hijaiyah_model->count_by_kategori('Tajwid');
 
+        // Dummy: total user per bulan (Jan-Jun)
+        $data['user_growth'] = [2, 3, 5, 7, 8, 10];
+        // Dummy: progress belajar
+        $data['learning_progress'] = [3, 2, 5]; // selesai, belajar, belum mulai
+
         // Ambil data user yang login
         $data['user'] = $this->session->userdata('user');
 
@@ -55,5 +60,15 @@ class Dashboard extends CI_Controller {
             $data['pengguna'] = $this->User_model->get_by_id($id);
             $this->load->view('edit_pengguna_view', $data);
         }
+    }
+
+    public function analytics() {
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('analytics_view', $data);
+    }
+
+    public function laporan() {
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('laporan_view', $data);
     }
 } 
