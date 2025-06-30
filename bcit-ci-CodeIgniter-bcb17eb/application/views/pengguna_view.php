@@ -59,7 +59,7 @@
                 <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
                 <a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>
                 <a href="<?php echo site_url('dashboard/laporan'); ?>">Laporan</a>
-                <a href="#">Pengaturan</a>
+                <a href="<?php echo site_url('dashboard/pengaturan'); ?>">Pengaturan</a>
             </nav>
         </div>
         <div class="user-info">
@@ -95,7 +95,7 @@
                         <th>STATUS</th>
                         <th>BERGABUNG</th>
                         <th>AKSI</th>
-                    </tr>
+            </tr>
                     <?php foreach($pengguna as $p): ?>
                     <tr>
                         <td>
@@ -138,13 +138,13 @@
                         <td>
                             <a class="user-action-link" style="color:#2563eb;" href="<?php echo site_url('dashboard/edit_pengguna/' . $p['P_id']); ?>">Edit</a>
                             <a class="user-action-link" style="color:#ef4444;" href="#" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </body>
 </html> 

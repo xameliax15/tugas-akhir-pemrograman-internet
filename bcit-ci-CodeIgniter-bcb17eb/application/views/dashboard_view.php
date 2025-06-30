@@ -117,17 +117,20 @@
             gap: 32px;
             padding: 32px 36px 0 36px;
             flex-wrap: wrap;
+            align-items: flex-start;
         }
         .card {
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-            padding: 28px 24px 24px 24px;
+            padding: 24px 24px 24px 24px;
             flex: 1;
             min-width: 320px;
             margin-bottom: 24px;
+            box-sizing: border-box;
         }
         .card h3 {
+            margin-top: 0;
             margin: 0 0 18px 0;
             font-size: 1.15em;
             color: #3b3f5c;
@@ -201,6 +204,58 @@
             .sidebar .user-info { padding: 16px; }
             .main-content { padding-left: 0; }
         }
+        #calendar-container {
+            width: 100%;
+            min-height: 340px;
+            min-height: 340px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .card.kalender-panel {
+            padding: 24px 24px 24px 24px;
+            margin-top: 0;
+            display: flex;
+                flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+        }
+        .card.kalender-panel h3 {
+            margin-bottom: 18px;
+        }
+        .flatpickr-calendar.inline {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 420px !important;
+            left: 0 !important;
+            right: 0 !important;
+            margin: 0 auto !important;
+            box-sizing: border-box;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            border-radius: 10px;
+            padding: 0;
+            min-height: 520px !important;
+        }
+        .flatpickr-innerContainer, .flatpickr-days, .dayContainer {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            box-sizing: border-box;
+        }
+        .flatpickr-months, .flatpickr-weekdays, .flatpickr-days {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+        @media (max-width: 520px) {
+            .card.kalender-panel { padding: 12px 4px; }
+            .flatpickr-calendar.inline { border-radius: 6px; }
+        }
     </style>
 </head>
 <body>
@@ -211,12 +266,12 @@
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>" class="active">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
-                <a href="#">Konten Pembelajaran</a>
-                <a href="#">Analytics</a>
+                <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
+                <a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>
                 <a href="#">Laporan</a>
-                <a href="#">Pengaturan</a>
+                <a href="<?php echo site_url('dashboard/pengaturan'); ?>">Pengaturan</a>
             </nav>
-        </div>
+    </div>
         <div class="user-info">
             <div class="avatar">
                 <?php
@@ -224,11 +279,11 @@
                 $initial = strtoupper(substr($user_name, 0, 1));
                 echo $initial;
                 ?>
-            </div>
+    </div>
             <div class="details">
                 <div class="name"><?php echo htmlspecialchars($user_name); ?></div>
                 <div class="role">Super Admin</div>
-            </div>
+    </div>
         </div>
     </div>
     <div class="main-content">
@@ -252,7 +307,7 @@
             </div>
         </div>
         <div class="dashboard-row">
-            <div class="card" style="max-width:600px;">
+            <div class="card" style="flex:1; min-width:350px; max-width:600px;">
                 <h3>Recent Activity</h3>
                 <div class="recent-activity">
                     <div class="activity-item">
@@ -274,34 +329,17 @@
                         <div class="activity-content">
                             <div class="activity-title">Muhammad Ali mencapai skor 100% pada kuis</div>
                             <div class="activity-time">10 menit yang lalu</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card stats" style="flex:1; min-width:220px; flex-direction:column; gap:18px;">
-                <div class="stat-box">
-                    <div class="stat-label">Total Pengguna</div>
-                    <div class="stat-value"><?php echo $total_pengguna; ?></div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Huruf Fathah</div>
-                    <div class="stat-value"><?php echo $total_fathah; ?></div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Huruf Kasroh</div>
-                    <div class="stat-value"><?php echo $total_kasroh; ?></div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Huruf Dhommah</div>
-                    <div class="stat-value"><?php echo $total_dhommah; ?></div>
-                </div>
-            </div>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Dummy data for user growth
+    // Grafik User Growth dari data PHP
+    const userGrowthData = <?php echo json_encode($user_growth); ?>;
     const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
     new Chart(userGrowthCtx, {
         type: 'line',
@@ -309,7 +347,7 @@
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             datasets: [{
                 label: 'New Users',
-                data: [55, 80, 110, 140, 180, 240],
+                data: userGrowthData,
                 borderColor: '#4a69bd',
                 backgroundColor: 'rgba(74,105,189,0.08)',
                 fill: true,
@@ -323,14 +361,15 @@
             scales: { y: { beginAtZero: true } }
         }
     });
-    // Dummy data for learning progress
+    // Grafik Learning Progress dari data PHP
+    const learningProgressData = <?php echo json_encode($learning_progress); ?>;
     const learningProgressCtx = document.getElementById('learningProgressChart').getContext('2d');
     new Chart(learningProgressCtx, {
         type: 'doughnut',
         data: {
             labels: ['Selesai', 'Sedang Belajar', 'Belum Mulai'],
             datasets: [{
-                data: [70, 20, 10],
+                data: learningProgressData,
                 backgroundColor: ['#10b981', '#f59e42', '#ef4444'],
                 borderWidth: 2
             }]
@@ -340,6 +379,17 @@
             plugins: { legend: { display: false } }
         }
     });
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+flatpickr("#calendar-container", {
+    inline: true,
+    locale: 'id',
+    defaultDate: new Date(),
+    showMonths: 1,
+    minWidth: '100%',
+});
 </script>
 </body>
 </html> 

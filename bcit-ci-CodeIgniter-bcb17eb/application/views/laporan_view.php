@@ -53,7 +53,7 @@
                 <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
                 <a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>
                 <a href="#" class="active">Laporan</a>
-                <a href="#">Pengaturan</a>
+                <a href="<?php echo site_url('dashboard/pengaturan'); ?>">Pengaturan</a>
             </nav>
         </div>
         <div class="user-info">
