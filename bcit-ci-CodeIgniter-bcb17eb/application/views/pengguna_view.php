@@ -20,8 +20,8 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .main-user-container { max-width: 1100px; margin: 40px auto; }
-        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; }
+        .main-user-container { max-width: 1600px; margin: 40px auto; }
+        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; max-width: 98%; min-width: 320px; margin: 0 auto; }
         .user-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
         .user-card-header h2 { margin: 0; font-size: 1.35em; color: #232946; }
         .add-user-btn { background: #2563eb; color: #fff; font-weight: 500; border: none; border-radius: 7px; padding: 10px 22px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
@@ -30,16 +30,21 @@
         .user-table th, .user-table td { padding: 14px 10px; text-align: left; }
         .user-table th { background: #f4f6fb; color: #232946; font-size: 1.05em; font-weight: 600; border-bottom: 2px solid #e5e9f2; }
         .user-table tr:not(:last-child) { border-bottom: 1px solid #e5e9f2; }
-        .user-avatar { width: 38px; height: 38px; border-radius: 50%; background: #e3eafe; color: #4a69bd; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1em; margin-right: 12px; }
+        .user-avatar {
+            width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1em; margin-right: 12px; color: #fff; }
         .user-info-cell { display: flex; align-items: center; }
         .user-name { font-weight: 500; color: #232946; }
         .user-email { font-size: 0.98em; color: #7b809a; }
-        .progress-bar-bg { background: #e5e9f2; border-radius: 8px; width: 90px; height: 8px; margin-right: 8px; display: inline-block; }
-        .progress-bar-fill { background: #22c55e; height: 8px; border-radius: 8px; display: inline-block; }
+        .progress-bar-bg { background: #e5e9f2; border-radius: 8px; width: 90px; height: 8px; margin-right: 8px; display: inline-block; overflow: hidden; }
+        .progress-bar-fill { background: linear-gradient(90deg, #22c55e 60%, #16a34a 100%); height: 8px; border-radius: 8px; display: inline-block; transition: width 0.4s cubic-bezier(.4,2.3,.3,1); }
         .status-badge { background: #d1fae5; color: #059669; border-radius: 8px; padding: 4px 16px; font-size: 0.98em; font-weight: 500; display: inline-block; }
-        .user-action-link { color: #2563eb; text-decoration: none; font-weight: 500; margin-right: 16px; cursor: pointer; }
+        .user-action-link { color: #2563eb; text-decoration: none; font-weight: 500; margin-right: 16px; cursor: pointer; border-radius: 4px; padding: 2px 8px; transition: background 0.15s; }
         .user-action-link:last-child { color: #ef4444; margin-right: 0; }
-        .user-action-link:hover { text-decoration: underline; }
+        .user-action-link:hover { text-decoration: underline; background: #f1f5fd; }
+        .user-action-link:last-child:hover { background: #ffeaea; }
+        .user-table tr:hover { background: #f4f6fb; transition: background 0.2s; }
+        .user-table th { background: #f7faff; color: #232946; font-size: 1.08em; font-weight: 700; border-bottom: 2px solid #e5e9f2; }
+        .user-table td, .user-table th { vertical-align: middle; }
         @media (max-width: 900px) { .main-user-container, .user-card { padding: 0 2vw; } .user-card { padding: 18px 4vw 8px 4vw; } .user-table th, .user-table td { padding: 10px 4px; font-size: 0.98em; } }
     </style>
 </head>
@@ -51,8 +56,8 @@
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>" class="active">Manajemen User</a>
-                <a href="#">Konten Pembelajaran</a>
-                <a href="#">Analytics</a>
+                <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
+                <a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>
                 <a href="#">Laporan</a>
                 <a href="#">Pengaturan</a>
             </nav>
@@ -95,14 +100,17 @@
                     <tr>
                         <td>
                             <div class="user-info-cell">
-                                <div class="user-avatar">
-                                    <?php
-                                    $nama = isset($p['Nama']) ? $p['Nama'] : 'User';
-                                    $nama_parts = explode(' ', $nama);
-                                    $initials = strtoupper(substr($nama_parts[0],0,1));
-                                    if(count($nama_parts)>1) $initials .= strtoupper(substr($nama_parts[1],0,1));
-                                    echo $initials;
-                                    ?>
+                                <?php
+                                $nama = isset($p['Nama']) ? $p['Nama'] : 'User';
+                                $nama_parts = explode(' ', $nama);
+                                $initials = strtoupper(substr($nama_parts[0],0,1));
+                                if(count($nama_parts)>1) $initials .= strtoupper(substr($nama_parts[1],0,1));
+                                // Avatar color array
+                                $avatar_colors = ['#4a69bd','#f59e42','#10b981','#ef4444','#6366f1','#f472b6','#facc15','#14b8a6'];
+                                $color = $avatar_colors[crc32($nama)%count($avatar_colors)];
+                                ?>
+                                <div class="user-avatar" style="background: <?= $color ?>;">
+                                    <?= $initials; ?>
                                 </div>
                                 <div>
                                     <div class="user-name"><?= htmlspecialchars($nama); ?></div>
@@ -119,16 +127,17 @@
                         <td>
                             <div style="display:flex;align-items:center;">
                                 <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill" style="width:<?= rand(40,100); ?>%;"></div>
+                                    <?php $progress = rand(10,28); $percent = round($progress/28*100); ?>
+                                    <div class="progress-bar-fill" style="width:<?= $percent; ?>%;"></div>
                                 </div>
-                                <span style="font-size:0.97em; color:#232946; font-weight:500;"><?= rand(10,28); ?>/28 huruf</span>
+                                <span style="font-size:0.97em; color:#232946; font-weight:500; margin-left:2px; "><?= $progress; ?>/28 huruf</span>
                             </div>
                         </td>
-                        <td><span class="status-badge">Aktif</span></td>
+                        <td><span class="status-badge" style="background:#e7fbe9; color:#22c55e;">Aktif</span></td>
                         <td><?= date('d M Y', strtotime('-'.rand(1,30).' days')); ?></td>
                         <td>
-                            <a class="user-action-link" href="<?php echo site_url('dashboard/edit_pengguna/' . $p['P_id']); ?>">Edit</a>
-                            <a class="user-action-link" href="#" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
+                            <a class="user-action-link" style="color:#2563eb;" href="<?php echo site_url('dashboard/edit_pengguna/' . $p['P_id']); ?>">Edit</a>
+                            <a class="user-action-link" style="color:#ef4444;" href="#" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
