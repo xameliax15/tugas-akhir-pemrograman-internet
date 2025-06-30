@@ -38,6 +38,7 @@
         .stat-list li { margin-bottom: 8px; color: #232946; font-size: 1em; }
         @media (max-width: 900px) { .main-row { flex-direction: column; } .side-col { flex-direction: row; gap: 18px; } }
         @media (max-width: 600px) { .container { padding: 0 2vw; } .row, .main-row { flex-direction: column; gap: 12px; } }
+        .logout-btn:hover { background: #c0392b; }
     </style>
 </head>
 <body>
@@ -46,6 +47,7 @@
         <div style="display:flex;align-items:center;gap:18px;">
             <span class="status">● Online</span>
             <div class="avatar"><?php echo strtoupper(substr($user['Nama'],0,1)); ?></div>
+            <a href="<?php echo site_url('auth/logout'); ?>" class="logout-btn" style="background:#e74c3c;color:#fff;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:500;margin-left:12px;transition:background 0.2s;">Logout</a>
         </div>
     </div>
     <div class="container">
