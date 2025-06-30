@@ -59,6 +59,7 @@
         .modal .close-btn { background: #f472b6; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1em; font-weight: 500; cursor: pointer; float: right; margin-top: -12px; margin-right: -12px; }
         .modal .close-btn:hover { background: #a21caf; }
         @media (max-width: 900px) { .main-row, .main-action-row, .stats-row, .quick-access-row { flex-direction: column; gap: 12px; } .container { padding: 0 2vw; } }
+        .logout-btn:hover { background: #c0392b; }
     </style>
 </head>
 <body>
@@ -69,6 +70,7 @@
             <button class="nav-btn"><span>📚</span> Belajar</button>
             <button class="nav-btn"><span>📝</span> Kuis</button>
             <button class="nav-btn profile-btn" title="Profile"><?php echo strtoupper(substr($user['Nama'],0,1)); ?></button>
+            <a href="<?php echo site_url('auth/logout'); ?>" class="logout-btn" style="background:#e74c3c;color:#fff;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:500;margin-left:12px;transition:background 0.2s;">Logout</a>
         </div>
     </div>
     <div class="container">
