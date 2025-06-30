@@ -71,4 +71,40 @@ class Dashboard extends CI_Controller {
         $data['user'] = $this->session->userdata('user');
         $this->load->view('laporan_view', $data);
     }
+
+    public function pengaturan() {
+        $this->load->model('Pengaturan_model');
+        $this->load->model('User_model');
+        $data['user'] = $this->session->userdata('user');
+        // Tambah admin
+        if ($this->input->post('add_admin')) {
+            $nama = $this->input->post('admin_nama');
+            $password = $this->input->post('admin_password');
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+            $this->User_model->insert_admin($nama, $password_hash);
+            $data['success'] = 'Admin baru berhasil ditambahkan!';
+        }
+        // Hapus admin
+        if ($this->input->get('delete_admin')) {
+            $id = $this->input->get('delete_admin');
+            $this->User_model->delete_admin($id);
+            $data['success'] = 'Admin berhasil dihapus!';
+        }
+        // Simpan pengaturan
+        if ($this->input->post('site_name')) {
+            $this->Pengaturan_model->set('site_name', $this->input->post('site_name'));
+            $this->Pengaturan_model->set('max_users', $this->input->post('max_users'));
+            $this->Pengaturan_model->set('enable_registration', $this->input->post('enable_registration') ? '1' : '0');
+            $this->Pengaturan_model->set('maintenance_mode', $this->input->post('maintenance_mode') ? '1' : '0');
+            $data['success'] = 'Pengaturan berhasil disimpan!';
+        }
+        // Ambil data pengaturan
+        $data['site_name'] = $this->Pengaturan_model->get('site_name') ?: 'Hijaiyah Learning Platform';
+        $data['max_users'] = $this->Pengaturan_model->get('max_users') ?: '100';
+        $data['enable_registration'] = $this->Pengaturan_model->get('enable_registration') === '1';
+        $data['maintenance_mode'] = $this->Pengaturan_model->get('maintenance_mode') === '1';
+        // Ambil semua admin
+        $data['admins'] = $this->User_model->get_all_admins();
+        $this->load->view('pengaturan_view', $data);
+    }
 } 

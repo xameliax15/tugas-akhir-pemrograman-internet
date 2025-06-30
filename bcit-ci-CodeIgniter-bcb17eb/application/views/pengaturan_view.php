@@ -80,45 +80,55 @@
         <div class="settings-row">
             <div class="settings-panel">
                 <div class="panel-title">System Settings</div>
-                <div class="form-label">Site Name</div>
-                <input class="settings-input" type="text" value="Hijaiyah Learning Platform" />
-                <div class="form-label">Max Users per Day</div>
-                <input class="settings-input" type="number" value="100" />
-                <div class="toggle-row">
-                    <span class="toggle-label">Enable Registration</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked />
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="toggle-row">
-                    <span class="toggle-label">Maintenance Mode</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" />
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <button class="save-btn">Save Settings</button>
+                <?php if (!empty($success)): ?>
+                    <div style="background:#d1fae5;color:#059669;padding:10px 16px;border-radius:7px;margin-bottom:14px;"> 
+                        <?php echo $success; ?>
+                    </div>
+                <?php endif; ?>
+                <form method="post">
+                    <div class="form-label">Site Name</div>
+                    <input class="settings-input" type="text" name="site_name" value="<?php echo htmlspecialchars($site_name); ?>" required />
+                    <div class="form-label">Max Users per Day</div>
+                    <input class="settings-input" type="number" name="max_users" value="<?php echo htmlspecialchars($max_users); ?>" required />
+                    <div class="toggle-row">
+                        <span class="toggle-label">Enable Registration</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" name="enable_registration" value="1" <?php if($enable_registration) echo 'checked'; ?> />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <span class="toggle-label">Maintenance Mode</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" name="maintenance_mode" value="1" <?php if($maintenance_mode) echo 'checked'; ?> />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <button class="save-btn" type="submit">Save Settings</button>
+                </form>
             </div>
             <div class="admin-panel">
                 <div class="panel-title">Admin Management</div>
                 <div class="admin-list">
-                    <div class="admin-item">
-                        <div class="admin-info">
-                            <span class="admin-role">Super Admin</span>
-                            <span class="admin-email">admin@hijaiyah.com</span>
+                    <?php foreach($admins as $admin): ?>
+                        <div class="admin-item">
+                            <div class="admin-info">
+                                <span class="admin-role">Admin</span>
+                                <span class="admin-email"><?php echo htmlspecialchars($admin['Nama']); ?></span>
+                            </div>
+                            <span class="admin-status">Active</span>
+                            <a href="?delete_admin=<?php echo $admin['P_id']; ?>" onclick="return confirm('Yakin ingin menghapus admin ini?')" style="color:#ef4444;margin-left:12px;text-decoration:none;font-weight:500;">Hapus</a>
                         </div>
-                        <span class="admin-status">Active</span>
-                    </div>
-                    <div class="admin-item">
-                        <div class="admin-info">
-                            <span class="admin-role">Content Manager</span>
-                            <span class="admin-email">content@hijaiyah.com</span>
-                        </div>
-                        <span class="admin-status">Active</span>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <button class="add-admin-btn">+ Add Admin</button>
+                <form method="post" style="margin-top:18px;">
+                    <input type="hidden" name="add_admin" value="1" />
+                    <div class="form-label">Nama Admin</div>
+                    <input class="settings-input" type="text" name="admin_nama" required />
+                    <div class="form-label">Password</div>
+                    <input class="settings-input" type="password" name="admin_password" required />
+                    <button class="add-admin-btn" type="submit">+ Add Admin</button>
+                </form>
             </div>
         </div>
     </div>
