@@ -88,18 +88,20 @@
             <span>Streak: 3 hari</span>
         </div>
         <div class="stats-row">
-            <div class="stat-card">12<div class="stat-label">Huruf Dipelajari</div></div>
-            <div class="stat-card blue">5<div class="stat-label">Kuis Selesai</div></div>
-            <div class="stat-card purple">8/10<div class="stat-label">Skor Terbaik</div></div>
-            <div class="stat-card pink">245<div class="stat-label">Total Poin</div></div>
+            <div class="stat-card"><?php echo $huruf_dipelajari; ?><div class="stat-label">Huruf Dipelajari</div></div>
+            <div class="stat-card blue"><?php echo $kuis_selesai; ?><div class="stat-label">Kuis Selesai</div></div>
+            <div class="stat-card purple"><?php echo $skor_terbaik; ?>/10<div class="stat-label">Skor Terbaik</div></div>
+            <div class="stat-card pink"><?php echo $total_poin; ?><div class="stat-label">Total Poin</div></div>
         </div>
         <div class="progress-section">
             <div class="progress-title">Progress Belajar Kamu</div>
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <span>Huruf Hijaiyah</span>
-                <span style="color:#a21caf;font-weight:600;">12/28 (43%)</span>
+                <span style="color:#a21caf;font-weight:600;">
+                    <?php echo $huruf_dipelajari; ?>/<?php echo $huruf_total; ?> (<?php echo round($huruf_dipelajari/$huruf_total*100); ?>%)
+                </span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:43%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:<?php echo round($huruf_dipelajari/$huruf_total*100); ?>%"></div></div>
             <div class="progress-info-row">
                 <div><span style="color:#f472b6;font-size:1.2em;">🎯</span> Target Hari Ini <span style="color:#5f5be3;font-weight:600;">3 Huruf Baru</span></div>
                 <div><span class="star">★</span> Level Kamu <span style="color:#a21caf;font-weight:600;">Pemula Aktif</span></div>

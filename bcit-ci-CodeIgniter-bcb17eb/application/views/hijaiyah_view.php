@@ -71,18 +71,33 @@
                 <div class="content-row">
                     <div class="card-panel">
                         <div class="panel-title">Huruf Hijaiyah</div>
+                        <form method="post" style="margin-bottom:18px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+                            <input type="hidden" name="add_huruf" value="1" />
+                            <div>
+                                <label style="font-size:0.98em;color:#232946;font-weight:500;">Huruf Arab</label><br>
+                                <input type="text" name="huruf1" maxlength="2" required style="padding:8px 12px;border-radius:7px;border:1px solid #e5e9f2;font-size:1.1em;width:60px;" />
+                            </div>
+                            <div>
+                                <label style="font-size:0.98em;color:#232946;font-weight:500;">Nama</label><br>
+                                <input type="text" name="huruf2" maxlength="20" required style="padding:8px 12px;border-radius:7px;border:1px solid #e5e9f2;font-size:1.1em;width:120px;" />
+                            </div>
+                            <div>
+                                <label style="font-size:0.98em;color:#232946;font-weight:500;">Bunyi</label><br>
+                                <input type="text" name="h_sound" maxlength="10" required style="padding:8px 12px;border-radius:7px;border:1px solid #e5e9f2;font-size:1.1em;width:80px;" />
+                            </div>
+                            <button type="submit" class="add-btn add-huruf" style="margin-top:0;">+ Tambah Huruf</button>
+                        </form>
                         <div class="item-list">
                             <?php foreach($huruf as $i => $h): ?>
                             <div class="item-card">
                                 <div class="item-info">
-                                    <div class="item-title"><?= htmlspecialchars($h['huruf']); ?> <span style="font-weight:400; color:#7b809a; margin-left:8px; font-size:0.97em;"> <?= htmlspecialchars($h['nama']); ?> </span></div>
+                                    <div class="item-title"><?= htmlspecialchars($h['Huruf_1']); ?> <span style="font-weight:400; color:#7b809a; margin-left:8px; font-size:0.97em;"> <?= htmlspecialchars($h['Huruf_2']); ?> </span></div>
                                     <div class="item-desc">Huruf ke-<?= $i+1; ?></div>
                                 </div>
                                 <a href="#" class="item-edit">Edit</a>
                             </div>
-                            <?php endforeach; ?>
+        <?php endforeach; ?>
                         </div>
-                        <button class="add-btn add-huruf">+ Tambah Huruf</button>
                     </div>
                     <div class="card-panel">
                         <div class="panel-title">Kuis & Latihan</div>
@@ -113,6 +128,19 @@
                     </div>
                 </div>
             </div>
+            <?php if (isset($this->session->userdata('user')['role']) && $this->session->userdata('user')['role'] === 'admin'): ?>
+            <button id="seedHurufBtn" class="btn btn-success mb-3">Isi Otomatis Huruf Hijaiyah Standar</button>
+            <div id="seedHurufMsg"></div>
+            <script>
+              document.getElementById('seedHurufBtn').onclick = function() {
+                if (!confirm('Yakin ingin mengisi huruf hijaiyah standar? Data yang sama tidak akan diduplikasi.')) return;
+                fetch('<?= site_url('dashboard/seed_huruf_hijaiyah') ?>')
+                  .then(r => r.text())
+                  .then(txt => document.getElementById('seedHurufMsg').innerHTML = '<div class="alert alert-info">'+txt+'</div>')
+                  .catch(() => alert('Gagal melakukan seed huruf.'));
+              };
+            </script>
+            <?php endif; ?>
         </div>
     </div>
 </body>

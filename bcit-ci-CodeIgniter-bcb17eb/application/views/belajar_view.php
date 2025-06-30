@@ -49,30 +49,29 @@
         <div class="huruf-header">Huruf Hijaiyah 📚</div>
         <div class="huruf-subtitle">Klik setiap huruf untuk mendengar suaranya!</div>
         <div class="huruf-grid">
-            <!-- 28 huruf hijaiyah -->
             <?php
-            $huruf = [
-                ['ا','Alif','a'],['ب','Ba','ba'],['ت','Ta','ta'],['ث','Tsa','tsa'],['ج','Jim','ja'],['ح','Ha','ha'],['خ','Kha','kha'],
-                ['د','Dal','da'],['ذ','Dzal','dza'],['ر','Ra','ra'],['ز','Zai','za'],['س','Sin','sa'],['ش','Syin','sya'],['ص','Shad','sha'],
-                ['ض','Dhad','dha'],['ط','Tha','tha'],['ظ','Zha','zha'],['ع','Ain','a'],['غ','Ghain','gha'],['ف','Fa','fa'],['ق','Qaf','qa'],
-                ['ك','Kaf','ka'],['ل','Lam','la'],['م','Mim','ma'],['ن','Nun','na'],['و','Wau','wa'],['ه','Ha','ha'],['ي','Ya','ya']
-            ];
             $colors = ['card-colors','card-colors-2','card-colors-3','card-colors-4','card-colors-5','card-colors-6'];
             foreach($huruf as $i=>$h) {
                 $color = $colors[$i%6];
-                echo "<div class='huruf-card $color' onclick=\"playAudio('$h[1]')\">
-                        <div class='huruf-arab'>$h[0]</div>
-                        <div class='huruf-nama'>$h[1]</div>
-                        <div class='huruf-bunyi'>$h[2]</div>
+                echo "<div class='huruf-card $color' onclick=\"playAudio('{$h['Huruf_2']}',{$h['Hh_id']})\">\n
+                        <div class='huruf-arab'>{$h['Huruf_1']}</div>\n
+                        <div class='huruf-nama'>{$h['Huruf_2']}</div>\n
+                        <div class='huruf-bunyi'>{$h['H_sound']}</div>\n
                     </div>";
             }
             ?>
         </div>
     </div>
     <script>
-        function playAudio(nama) {
+        function playAudio(nama, huruf_id) {
             // Simulasi audio: log ke console
             console.log('Memutar suara: ' + nama);
+            // Catat belajar ke backend
+            fetch('<?= site_url('dashboard/belajar_huruf_log') ?>', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'huruf_id=' + encodeURIComponent(huruf_id)
+            });
             // TODO: Integrasi audio asli jika ada file suara
         }
     </script>

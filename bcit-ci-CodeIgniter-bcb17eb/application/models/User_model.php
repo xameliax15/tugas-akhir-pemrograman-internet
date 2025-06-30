@@ -6,7 +6,12 @@ class User_model extends CI_Model {
         $this->db->where('Nama', $nama);
         $this->db->where('Password', $password);
         $query = $this->db->get('pengguna');
-        return $query->row_array();
+        $user = $query->row_array();
+        if ($user) {
+            $this->db->where('P_id', $user['P_id']);
+            $this->db->update('pengguna', ['last_login' => date('Y-m-d H:i:s')]);
+        }
+        return $user;
     }
 
     public function get_by_username($nama) {
@@ -18,7 +23,9 @@ class User_model extends CI_Model {
     public function insert_user($nama, $password_hash) {
         $data = array(
             'Nama' => $nama,
-            'Password' => $password_hash
+            'Password' => $password_hash,
+            'Role' => 'user',
+            'created_at' => date('Y-m-d H:i:s')
         );
         return $this->db->insert('pengguna', $data);
     }
@@ -54,7 +61,8 @@ class User_model extends CI_Model {
         $data = array(
             'Nama' => $nama,
             'Password' => $password_hash,
-            'Role' => 'admin'
+            'Role' => 'admin',
+            'created_at' => date('Y-m-d H:i:s')
         );
         return $this->db->insert('pengguna', $data);
     }
