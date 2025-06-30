@@ -16,13 +16,13 @@
         .sidebar .user-info .details { display: flex; flex-direction: column; }
         .sidebar .user-info .details .name { font-weight: 600; color: #3b3f5c; }
         .sidebar .user-info .details .role { font-size: 0.95em; color: #7b809a; }
-        .main-content { flex: 1; display: flex; flex-direction: column; background: #f8fafc; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #f8fafc; padding-left: 40px; padding-right: 40px; }
         .header { background: #fff; padding: 18px 36px; border-bottom: 1px solid #e5e9f2; display: flex; justify-content: space-between; align-items: center; }
         .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .laporan-container { max-width: 1200px; margin: 40px auto; }
-        .laporan-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; max-width: 100%; min-width: 320px; margin: 0 auto; }
+        .laporan-container { width: 100%; margin: 40px 0 0 0; }
+        .laporan-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; width: 100%; min-width: 320px; margin: 0; }
         .laporan-title { font-size: 1.35em; font-weight: bold; color: #232946; margin-bottom: 24px; }
         .laporan-row { display: flex; gap: 40px; flex-wrap: wrap; }
         .laporan-col { flex: 1; min-width: 320px; }
