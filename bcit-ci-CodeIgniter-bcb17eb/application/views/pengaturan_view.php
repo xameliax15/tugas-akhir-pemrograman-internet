@@ -110,16 +110,22 @@
             <div class="admin-panel">
                 <div class="panel-title">Admin Management</div>
                 <div class="admin-list">
-                    <?php foreach($admins as $admin): ?>
-                        <div class="admin-item">
-                            <div class="admin-info">
-                                <span class="admin-role">Admin</span>
-                                <span class="admin-email"><?php echo htmlspecialchars($admin['Nama']); ?></span>
+                    <div style="display:flex; font-weight:600; color:#232946; margin-bottom:8px;">
+                        <div style="flex:2;">Nama Admin</div>
+                        <div style="flex:1;">Aksi</div>
+                    </div>
+                    <?php if (empty($admins)): ?>
+                        <div style="padding:12px 0; color:#7b809a;">Belum ada admin terdaftar.</div>
+                    <?php else: ?>
+                        <?php foreach($admins as $admin): ?>
+                            <div class="admin-item" style="display:flex;align-items:center;">
+                                <div style="flex:2;"><span class="admin-role">Admin</span> <span class="admin-email"><?php echo htmlspecialchars($admin['Nama']); ?></span></div>
+                                <div style="flex:1;">
+                                    <a href="?delete_admin=<?php echo $admin['P_id']; ?>" onclick="return confirm('Yakin ingin menghapus admin ini?')" style="color:#ef4444;text-decoration:none;font-weight:500;">Hapus</a>
+                                </div>
                             </div>
-                            <span class="admin-status">Active</span>
-                            <a href="?delete_admin=<?php echo $admin['P_id']; ?>" onclick="return confirm('Yakin ingin menghapus admin ini?')" style="color:#ef4444;margin-left:12px;text-decoration:none;font-weight:500;">Hapus</a>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
                 <form method="post" style="margin-top:18px;">
                     <input type="hidden" name="add_admin" value="1" />
