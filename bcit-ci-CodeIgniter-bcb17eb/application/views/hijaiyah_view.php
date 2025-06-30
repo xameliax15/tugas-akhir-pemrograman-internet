@@ -21,8 +21,8 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .content-row { display: flex; gap: 30px; flex-wrap: wrap; }
-        .card-panel { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; flex: 1; min-width: 520px; max-width: 800px; display: flex; flex-direction: column; }
+        .content-row { display: flex; gap: 30px; flex-wrap: wrap; margin: 0; }
+        .card-panel { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; flex: 1; min-width: 320px; max-width: 900px; margin: 0; display: flex; flex-direction: column; }
         .panel-title { font-size: 1.18em; font-weight: bold; color: #232946; margin-bottom: 18px; }
         .item-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
         .item-card { background: #f7faff; border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }

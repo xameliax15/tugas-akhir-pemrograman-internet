@@ -20,8 +20,8 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .main-user-container { max-width: 1600px; margin: 40px auto; }
-        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; max-width: 98%; min-width: 320px; margin: 0 auto; }
+        .main-user-container { max-width: 1600px; margin: 40px 0 0 0; }
+        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; max-width: 900px; min-width: 320px; margin: 0; }
         .user-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
         .user-card-header h2 { margin: 0; font-size: 1.35em; color: #232946; }
         .add-user-btn { background: #2563eb; color: #fff; font-weight: 500; border: none; border-radius: 7px; padding: 10px 22px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
