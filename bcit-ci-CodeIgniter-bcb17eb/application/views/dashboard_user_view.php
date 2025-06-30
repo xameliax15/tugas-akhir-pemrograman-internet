@@ -70,7 +70,9 @@
             <button class="nav-btn" onclick="window.location.href='<?php echo site_url('dashboard/belajar'); ?>'">
                 <span>📚</span> Belajar
             </button>
-            <button class="nav-btn"><span>📝</span> Kuis</button>
+            <button class="nav-btn" onclick="window.location.href='<?php echo site_url('dashboard/quiz'); ?>'">
+                <span>🎯</span> Kuis
+            </button>
             <button class="nav-btn profile-btn" title="Profile"><?php echo strtoupper(substr($user['Nama'],0,1)); ?></button>
             <a href="<?php echo site_url('auth/logout'); ?>" class="logout-btn" style="background:#e74c3c;color:#fff;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:500;margin-left:12px;transition:background 0.2s;">Logout</a>
         </div>

@@ -122,4 +122,9 @@ class Dashboard extends CI_Controller {
         $data['user'] = $this->session->userdata('user');
         $this->load->view('belajar_view', $data);
     }
+
+    public function quiz() {
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('quiz_view', $data);
+    }
 } 
