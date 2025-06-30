@@ -25,7 +25,7 @@ class Auth extends CI_Controller {
             if (password_verify($password, $user['Password'])) {
                 $this->session->set_userdata('logged_in', true);
                 $this->session->set_userdata('user', $user);
-                if ($user['Role'] === 'admin') {
+                if ($user['role'] === 'admin') {
                     redirect(site_url('dashboard'));
                 } else {
                     redirect(site_url('dashboard/user'));

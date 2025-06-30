@@ -12,6 +12,11 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
+        $user = $this->session->userdata('user');
+        if (!$user || $user['role'] !== 'admin') {
+            redirect('dashboard/user');
+            return;
+        }
         // Total pengguna
         $this->load->model('User_model');
         $data['total_pengguna'] = $this->User_model->count_all();
