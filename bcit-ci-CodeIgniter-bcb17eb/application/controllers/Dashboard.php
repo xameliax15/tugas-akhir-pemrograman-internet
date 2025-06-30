@@ -107,4 +107,9 @@ class Dashboard extends CI_Controller {
         $data['admins'] = $this->User_model->get_all_admins();
         $this->load->view('pengaturan_view', $data);
     }
+
+    public function user() {
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('dashboard_user_view', $data);
+    }
 } 
