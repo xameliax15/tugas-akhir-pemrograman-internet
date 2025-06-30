@@ -31,16 +31,18 @@
         @media (max-width: 1100px) { .huruf-grid { grid-template-columns: repeat(5, 1fr); } .huruf-card { width: 110px; height: 110px; } }
         @media (max-width: 800px) { .huruf-grid { grid-template-columns: repeat(4, 1fr); } .huruf-card { width: 100px; height: 100px; } }
         @media (max-width: 600px) { .huruf-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .huruf-card { width: 90px; height: 90px; } }
+        .logout-btn:hover { background: #c0392b; }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo"><span class="logo-icon">📚</span> Belajar Hijaiyah</div>
+        <div class="logo"><span class="logo-icon">ح</span> Belajar Hijaiyah</div>
         <div class="nav-btns">
-            <button class="nav-btn"><span>🏠</span> Beranda</button>
+            <button class="nav-btn" onclick="window.location.href='<?php echo site_url('dashboard/user'); ?>'"><span>🏠</span> Beranda</button>
             <button class="nav-btn active"><span>📚</span> Belajar</button>
             <button class="nav-btn"><span>📝</span> Kuis</button>
             <button class="nav-btn profile-btn" title="Profile">😊</button>
+            <a href="<?php echo site_url('auth/logout'); ?>" class="logout-btn" style="background:#e74c3c;color:#fff;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:500;margin-left:12px;transition:background 0.2s;">Logout</a>
         </div>
     </div>
     <div class="container">
