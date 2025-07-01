@@ -12,7 +12,7 @@
         .navbar .nav-btn { background: #fff; color: #7b6cf6; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1em; font-weight: 500; cursor: pointer; transition: background 0.2s, color 0.2s; display: flex; align-items: center; gap: 6px; }
         .navbar .nav-btn.active, .navbar .nav-btn:hover { background: #f3e8ff; color: #5f5be3; }
         .navbar .profile-btn { background: #fff; color: #7b6cf6; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.1em; font-weight: bold; margin-left: 8px; }
-        .container { max-width: 1200px; margin: 32px auto; padding: 0 18px; }
+        .container { width: 100%; max-width: none; margin: 0; padding: 32px 2vw; box-sizing: border-box; }
         .welcome { font-size: 2em; font-weight: 700; color: #5f5be3; margin-bottom: 6px; text-align: left; }
         .subtitle { color: #7b809a; font-size: 1.15em; margin-bottom: 18px; text-align: left; }
         .info-row { display: flex; align-items: center; gap: 18px; color: #7b809a; font-size: 1.05em; margin-bottom: 18px; }
@@ -98,10 +98,17 @@
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <span>Huruf Hijaiyah</span>
                 <span style="color:#a21caf;font-weight:600;">
-                    <?php echo $huruf_dipelajari; ?>/<?php echo $huruf_total; ?> (<?php echo round($huruf_dipelajari/$huruf_total*100); ?>%)
+                    <?php echo $huruf_dipelajari; ?>/<?php echo $huruf_total; ?> (
+                    <?php
+                        if ($huruf_total > 0) {
+                            echo round($huruf_dipelajari/$huruf_total*100);
+                        } else {
+                            echo '0';
+                        }
+                    ?>%)
                 </span>
             </div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:<?php echo round($huruf_dipelajari/$huruf_total*100); ?>%"></div></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:<?php echo ($huruf_total > 0 ? round($huruf_dipelajari/$huruf_total*100) : 0); ?>%"></div></div>
             <div class="progress-info-row">
                 <div><span style="color:#f472b6;font-size:1.2em;">🎯</span> Target Hari Ini <span style="color:#5f5be3;font-weight:600;">3 Huruf Baru</span></div>
                 <div><span class="star">★</span> Level Kamu <span style="color:#a21caf;font-weight:600;">Pemula Aktif</span></div>
@@ -109,11 +116,15 @@
             </div>
         </div>
         <div class="activity-section">
-            <div class="activity-title">Aktivitas Terbaru</div>
+            <div class="activity-title">Riwayat Belajar Terbaru</div>
             <ul class="activity-feed">
-                <li><span style="color:#22c55e;">✔</span> Menyelesaikan Kuis Huruf Ba-Ta-Tsa <span class="badge">+10 Poin</span></li>
-                <li><span style="color:#fbbf24;">🏅</span> Mendapat Badge "Pemula Semangat" <span style="color:#7b809a;font-size:0.97em;">2 hari yang lalu</span></li>
-                <li><span style="color:#3b82f6;">📚</span> Belajar huruf Dal, Dzal, Ra <span class="badge">+3 Huruf</span></li>
+                <?php if (!empty($riwayat_belajar)): ?>
+                    <?php foreach ($riwayat_belajar as $log): ?>
+                        <li><span style="color:#3b82f6;">📚</span> Belajar huruf <b><?php echo htmlspecialchars($log['Huruf_2']); ?></b> (<?php echo htmlspecialchars($log['Huruf_1']); ?>) <span class="badge"><?php echo date('d M H:i', strtotime($log['waktu_belajar'])); ?></span></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>Belum ada riwayat belajar.</li>
+                <?php endif; ?>
             </ul>
         </div>
         <div class="main-action-row">
@@ -170,10 +181,32 @@
             let title = '', body = '';
             if (type === 'leaderboard') {
                 title = 'Leaderboard';
-                body = '<b>Ranking Kamu: #1</b><br>1. Ahmad (245 poin)<br>2. Budi (210 poin)<br>3. Siti (180 poin)';
+                body = '<ol style="padding-left:18px;">'+
+                    <?php
+                    $rank = 1;
+                    $user_rank = null;
+                    foreach ($leaderboard as $row) {
+                        $is_me = ($row['P_id'] == $user['P_id']);
+                        if ($is_me) $user_rank = $rank;
+                        echo "'".($is_me?'<b>':'').$rank.'. '.htmlspecialchars($row['Nama']).' ('.($row['total_skor']?:0).' poin)'.($is_me?'</b>':'')."' + ";
+                        $rank++;
+                    }
+                    echo "''";
+                    ?>
+                +'</ol>';
+                <?php if (isset($user_rank)): ?>
+                body = '<b>Ranking Kamu: #<?php echo $user_rank; ?></b><br>' + body;
+                <?php endif; ?>
             } else if (type === 'achievements') {
                 title = 'Pencapaian';
-                body = '<ul><li>🏅 Pemula Semangat (Unlocked)</li><li>🎯 Kuis Master (Unlocked)</li><li>🔒 Konsisten 30 Hari (Locked)</li></ul>';
+                body = '<ul style="padding-left:18px;">'+
+                    <?php
+                    foreach ($badges as $badge) {
+                        echo "'<li>🏅 ".htmlspecialchars($badge['nama'])." <span style=\"color:#7b809a;font-size:0.97em;\">".date('d M Y', strtotime($badge['tanggal_didapat']))."</span></li>' + ";
+                    }
+                    echo "''";
+                    ?>
+                +'</ul>';
             } else if (type === 'profile') {
                 title = 'Profile';
                 body = 'Nama: Ahmad<br>Email: ahmad@email.com<br>Level: Pemula Aktif';

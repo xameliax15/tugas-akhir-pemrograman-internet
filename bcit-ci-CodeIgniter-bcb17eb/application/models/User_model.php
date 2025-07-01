@@ -82,4 +82,25 @@ class User_model extends CI_Model {
         $this->db->where('Role', 'admin');
         return $this->db->delete('pengguna');
     }
+
+    // Ambil leaderboard berdasarkan total poin (skor kuis)
+    public function get_leaderboard($limit = 10) {
+        $this->db->select('pengguna.P_id, pengguna.Nama, SUM(quiz_log.skor) as total_skor');
+        $this->db->from('pengguna');
+        $this->db->join('quiz_log', 'quiz_log.user_id = pengguna.P_id', 'left');
+        $this->db->group_by('pengguna.P_id');
+        $this->db->order_by('total_skor', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result_array();
+    }
+
+    // Ambil badge yang dimiliki user
+    public function get_badges_by_user($user_id) {
+        $this->db->select('badge.nama, badge.deskripsi, badge.icon, user_badge.tanggal_didapat');
+        $this->db->from('user_badge');
+        $this->db->join('badge', 'user_badge.badge_id = badge.id', 'left');
+        $this->db->where('user_badge.user_id', $user_id);
+        $this->db->order_by('user_badge.tanggal_didapat', 'DESC');
+        return $this->db->get()->result_array();
+    }
 } 

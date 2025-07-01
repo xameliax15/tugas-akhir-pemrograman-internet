@@ -143,6 +143,13 @@ class Dashboard extends CI_Controller {
         $data['huruf_total'] = count($this->Hijaiyah_model->get_all());
         // Huruf dipelajari real
         $data['huruf_dipelajari'] = $this->db->distinct()->where('user_id', $user_id)->count_all_results('belajar_log');
+        // Ambil riwayat belajar user
+        $data['riwayat_belajar'] = $this->Hijaiyah_model->get_riwayat_belajar($user_id, 10);
+        // Ambil leaderboard
+        $this->load->model('User_model');
+        $data['leaderboard'] = $this->User_model->get_leaderboard(10);
+        // Ambil badge user
+        $data['badges'] = $this->User_model->get_badges_by_user($user_id);
         $this->load->view('dashboard_user_view', $data);
     }
 

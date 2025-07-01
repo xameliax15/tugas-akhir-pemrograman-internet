@@ -50,7 +50,7 @@
                 <a href="<?php echo site_url('dashboard'); ?>" class="active">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>">Kelola Pengguna</a>
                 <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Kelola Konten</a>
-                <a href="<?php echo site_url('dashboard/analytics'); ?>">Analitik</a>
+                <!--<a href="<?php echo site_url('dashboard/analytics'); ?>">Analitik</a>-->
                 <a href="<?php echo site_url('dashboard/pengaturan'); ?>">Pengaturan</a>
             </nav>
     </div>

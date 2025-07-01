@@ -6,19 +6,19 @@
     <style>
         body { background: #f8fafc; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
         .dashboard-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: #fff; border-right: 1px solid #e5e9f2; display: flex; flex-direction: column; justify-content: space-between; }
-        .sidebar .logo { font-size: 1.5em; font-weight: bold; color: #3b3f5c; padding: 32px 0 24px 32px; letter-spacing: 1px; }
+        .sidebar { width: 250px; background: #6c2eb7; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+        .sidebar .logo { font-size: 1.5em; font-weight: bold; color: #fff; padding: 32px 0 24px 32px; letter-spacing: 1px; }
         .sidebar nav { flex: 1; }
-        .sidebar nav a { display: flex; align-items: center; padding: 14px 32px; color: #3b3f5c; text-decoration: none; font-size: 1.08em; border-left: 4px solid transparent; transition: background 0.2s, border 0.2s; margin-bottom: 2px; }
-        .sidebar nav a.active, .sidebar nav a:hover { background: #f0f4fa; border-left: 4px solid #4a69bd; color: #4a69bd; }
-        .sidebar .user-info { background: #f4f6fb; padding: 24px 32px; display: flex; align-items: center; gap: 16px; }
-        .sidebar .user-info .avatar { width: 44px; height: 44px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; color: #4a69bd; font-weight: bold; }
+        .sidebar nav a { display: flex; align-items: center; padding: 14px 32px; color: #fff; text-decoration: none; font-size: 1.08em; border-left: 4px solid transparent; transition: background 0.2s, border 0.2s; margin-bottom: 2px; }
+        .sidebar nav a.active, .sidebar nav a:hover { background: #5a2497; border-left: 4px solid #fff; color: #fff; }
+        .sidebar .user-info { background: #5a2497; padding: 24px 32px; display: flex; align-items: center; gap: 16px; color: #fff; }
+        .sidebar .user-info .avatar { width: 44px; height: 44px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; color: #6c2eb7; font-weight: bold; }
         .sidebar .user-info .details { display: flex; flex-direction: column; }
-        .sidebar .user-info .details .name { font-weight: 600; color: #3b3f5c; }
-        .sidebar .user-info .details .role { font-size: 0.95em; color: #7b809a; }
+        .sidebar .user-info .details .name { font-weight: 600; color: #fff; }
+        .sidebar .user-info .details .role { font-size: 0.95em; color: #e0d7f7; }
         .main-content { flex: 1; display: flex; flex-direction: column; background: #f8fafc; padding-left: 40px; padding-right: 40px; }
         .header { background: #fff; padding: 18px 36px; border-bottom: 1px solid #e5e9f2; display: flex; justify-content: space-between; align-items: center; }
-        .header .title { font-size: 1.3em; font-weight: 600; color: #3b3f5c; }
+        .header .title { font-size: 1.3em; font-weight: 600; color: #232946; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
         .settings-row { display: flex; gap: 32px; margin-top: 40px; }
@@ -59,7 +59,7 @@
                 <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
                 <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
-                <a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>
+                <!--<a href="<?php echo site_url('dashboard/analytics'); ?>">Analytics</a>-->
                 <a href="<?php echo site_url('dashboard/laporan'); ?>">Laporan</a>
                 <a href="#" class="active">Pengaturan</a>
             </nav>

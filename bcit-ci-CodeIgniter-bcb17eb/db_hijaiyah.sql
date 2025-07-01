@@ -2,21 +2,30 @@
 CREATE DATABASE IF NOT EXISTS db_hijaiyah;
 USE db_hijaiyah;
 
+-- Tabel Badge
+CREATE TABLE IF NOT EXISTS badge (
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    nama VARCHAR(100),
+    deskripsi TEXT,
+    icon VARCHAR(100)
+);
+
 -- Tabel Pengguna
 CREATE TABLE IF NOT EXISTS pengguna (
     P_id INT(11) PRIMARY KEY AUTO_INCREMENT,
     Nama VARCHAR(100),
-    Password VARCHAR(50),
-    Role VARCHAR(30) DEFAULT 'user', -- user atau admin
+    Password VARCHAR(100),
+    role VARCHAR(30) DEFAULT 'user', -- user atau admin
     last_login DATETIME,
     created_at DATETIME
 );
 
--- Tabel Pengaturan
-CREATE TABLE IF NOT EXISTS pengaturan (
+-- Tabel Belajar Log
+CREATE TABLE IF NOT EXISTS belajar_log (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
-    nama_pengaturan VARCHAR(100) NOT NULL,
-    nilai TEXT
+    user_id INT(11),
+    huruf_id INT(11),
+    waktu_belajar DATETIME
 );
 
 -- Tabel Huruf Hijaiyah
@@ -31,7 +40,14 @@ CREATE TABLE IF NOT EXISTS huruf_hijaiyah (
     Deskripsi MEDIUMTEXT
 );
 
--- Tabel Log Kuis
+-- Tabel Pengaturan
+CREATE TABLE IF NOT EXISTS pengaturan (
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    nama_pengaturan VARCHAR(100) NOT NULL,
+    nilai TEXT
+);
+
+-- Tabel Quiz Log
 CREATE TABLE IF NOT EXISTS quiz_log (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(11),
@@ -42,16 +58,13 @@ CREATE TABLE IF NOT EXISTS quiz_log (
     waktu_mulai DATETIME,
     waktu_selesai DATETIME,
     detail_jawaban TEXT,
-    tanggal DATE,
-    FOREIGN KEY (user_id) REFERENCES pengguna(P_id)
+    tanggal DATE
 );
 
--- Tabel Log Belajar Huruf
-CREATE TABLE IF NOT EXISTS belajar_log (
+-- Tabel User Badge
+CREATE TABLE IF NOT EXISTS user_badge (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(11),
-    huruf_id INT(11),
-    waktu_belajar DATETIME,
-    FOREIGN KEY (user_id) REFERENCES pengguna(P_id),
-    FOREIGN KEY (huruf_id) REFERENCES huruf_hijaiyah(Hh_id)
+    badge_id INT(11),
+    tanggal_didapat DATETIME
 ); 
