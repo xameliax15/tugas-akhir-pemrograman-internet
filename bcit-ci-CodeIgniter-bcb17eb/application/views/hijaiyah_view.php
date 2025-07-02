@@ -21,8 +21,9 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #232946; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .content-row { display: flex; gap: 30px; flex-wrap: wrap; margin: 0; }
-        .card-panel { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; flex: 1; min-width: 320px; max-width: 900px; margin: 0; display: flex; flex-direction: column; }
+        .content-row { display: flex; gap: 32px; max-width: 1200px; margin: 40px auto 0 auto; align-items: flex-start; }
+        .panel-huruf { flex: 2; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px; min-width: 320px; border-left: 6px solid #6c2eb7; display: flex; flex-direction: column; box-sizing: border-box; }
+        .panel-kuis { flex: 1; background: #f7faff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px; min-width: 320px; border-left: 6px solid #22c55e; display: flex; flex-direction: column; box-sizing: border-box; }
         .panel-title { font-size: 1.18em; font-weight: bold; color: #232946; margin-bottom: 18px; }
         .item-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
         .item-card { background: #f7faff; border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
@@ -36,7 +37,7 @@
         .add-huruf:hover { background: #1741a6; }
         .add-kuis { background: #22c55e; color: #fff; }
         .add-kuis:hover { background: #16a34a; }
-        @media (max-width: 900px) { .content-row { flex-direction: column; gap: 18px; } .main-content { padding: 0 2vw; } }
+        @media (max-width: 900px) { .content-row { flex-direction: column; gap: 18px; max-width: 100vw; margin: 18px 2vw 0 2vw; } .panel-huruf, .panel-kuis { padding: 18px 4vw; min-width: 0; } }
     </style>
 </head>
 <body>
@@ -44,7 +45,7 @@
     <div class="dashboard-container">
         <div class="sidebar">
             <div>
-                <div class="logo">Admin Panel</div>
+                <div class="logo">Admin Panel<br><span style='font-size:0.7em;font-weight:400;'>Belajar Hijaiyah</span></div>
                 <nav>
                     <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                     <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
@@ -69,7 +70,7 @@
             </div>
             <div style="max-width:1200px;margin:40px auto;">
                 <div class="content-row">
-                    <div class="card-panel">
+                    <div class="panel-huruf">
                         <div class="panel-title">Huruf Hijaiyah</div>
                         <form method="post" style="margin-bottom:18px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
                             <input type="hidden" name="add_huruf" value="1" />
@@ -99,7 +100,7 @@
         <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="card-panel">
+                    <div class="panel-kuis">
                         <div class="panel-title">Kuis & Latihan</div>
                         <div class="item-list">
                             <div class="item-card">

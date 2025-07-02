@@ -21,8 +21,8 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #232946; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .laporan-container { width: 100%; margin: 0; }
-        .laporan-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; max-width: 900px; min-width: 320px; margin: 40px 0 0 0; }
+        .main-laporan-container { width: 100%; max-width: none; margin: 40px 0 0 0; padding: 0; }
+        .laporan-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; width: auto; max-width: none; min-width: 320px; margin: 32px 32px 0 32px; box-sizing: border-box; display: flex; gap: 32px; }
         .laporan-title { font-size: 1.35em; font-weight: bold; color: #232946; margin-bottom: 24px; }
         .laporan-row { display: flex; gap: 40px; flex-wrap: wrap; }
         .laporan-col { flex: 1; min-width: 320px; }
@@ -38,7 +38,7 @@
         .recent-time { color: #7b809a; font-size: 0.97em; margin-top: 2px; }
         .recent-download { color: #2563eb; text-decoration: none; font-weight: 500; font-size: 1em; transition: color 0.2s; }
         .recent-download:hover { text-decoration: underline; color: #1741a6; }
-        @media (max-width: 900px) { .laporan-row { flex-direction: column; gap: 18px; } .main-content { padding: 0 2vw; } }
+        @media (max-width: 900px) { .laporan-card { flex-direction: column; padding: 18px 4vw 18px 4vw; margin: 18px 2vw; } }
     </style>
 </head>
 <body>
@@ -46,7 +46,7 @@
 <div class="dashboard-container">
     <div class="sidebar">
         <div>
-            <div class="logo">Admin Panel</div>
+            <div class="logo">Admin Panel<br><span style='font-size:0.7em;font-weight:400;'>Belajar Hijaiyah</span></div>
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
@@ -69,7 +69,7 @@
             <div class="title">Laporan</div>
             <a href="<?php echo site_url('auth/logout'); ?>" class="logout">Logout</a>
         </div>
-        <div class="laporan-container">
+        <div class="main-laporan-container">
             <div class="laporan-card">
                 <div class="laporan-title">Laporan</div>
                 <div class="laporan-row">

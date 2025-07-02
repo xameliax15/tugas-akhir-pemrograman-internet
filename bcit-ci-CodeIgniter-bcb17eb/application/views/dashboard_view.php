@@ -48,9 +48,10 @@
             <div class="logo">Admin Panel<br><span style='font-size:0.7em;font-weight:400;'>Belajar Hijaiyah</span></div>
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>" class="active">Dashboard</a>
-                <a href="<?php echo site_url('dashboard/pengguna'); ?>">Kelola Pengguna</a>
-                <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Kelola Konten</a>
+                <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
+                <a href="<?php echo site_url('dashboard/hijaiyah'); ?>">Konten Pembelajaran</a>
                 <!--<a href="<?php echo site_url('dashboard/analytics'); ?>">Analitik</a>-->
+                <a href="<?php echo site_url('dashboard/laporan'); ?>">Laporan</a>
                 <a href="<?php echo site_url('dashboard/pengaturan'); ?>">Pengaturan</a>
             </nav>
     </div>

@@ -20,8 +20,8 @@
         .header .title { font-size: 1.3em; font-weight: 600; color: #232946; }
         .header .logout { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
         .header .logout:hover { background: #c0392b; }
-        .main-user-container { max-width: 1600px; margin: 40px 0 0 0; }
-        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; max-width: 900px; min-width: 320px; margin: 0; }
+        .main-user-container { width: 100%; max-width: none; margin: 40px 0 0 0; padding: 0; }
+        .user-card { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 18px 32px; width: auto; max-width: none; min-width: 320px; margin: 32px 32px 0 32px; box-sizing: border-box; gap: 32px; }
         .user-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
         .user-card-header h2 { margin: 0; font-size: 1.35em; color: #232946; }
         .add-user-btn { background: #2563eb; color: #fff; font-weight: 500; border: none; border-radius: 7px; padding: 10px 22px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
@@ -45,14 +45,14 @@
         .user-table tr:hover { background: #f4f6fb; transition: background 0.2s; }
         .user-table th { background: #f7faff; color: #232946; font-size: 1.08em; font-weight: 700; border-bottom: 2px solid #e5e9f2; }
         .user-table td, .user-table th { vertical-align: middle; }
-        @media (max-width: 900px) { .main-user-container, .user-card { padding: 0 2vw; } .user-card { padding: 18px 4vw 8px 4vw; } .user-table th, .user-table td { padding: 10px 4px; font-size: 0.98em; } }
+        @media (max-width: 900px) { .user-card { padding: 18px 4vw 8px 4vw; margin: 18px 2vw; } .user-table th, .user-table td { padding: 10px 4px; font-size: 0.98em; } }
     </style>
 </head>
 <body>
 <div class="dashboard-container">
     <div class="sidebar">
         <div>
-            <div class="logo">Admin Panel</div>
+            <div class="logo">Admin Panel<br><span style='font-size:0.7em;font-weight:400;'>Belajar Hijaiyah</span></div>
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>" class="active">Manajemen User</a>

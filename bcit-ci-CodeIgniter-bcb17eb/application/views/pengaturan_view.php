@@ -23,8 +23,8 @@
         .header .logout:hover { background: #c0392b; }
         .settings-row { display: flex; gap: 32px; margin-top: 40px; }
         .settings-panel, .admin-panel { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 32px 32px 32px; min-width: 320px; flex: 1; display: flex; flex-direction: column; }
-        .settings-panel { max-width: 480px; }
-        .admin-panel { max-width: 400px; }
+        .settings-panel { max-width: 800px; }
+        .admin-panel { max-width: 800px; }
         .panel-title { font-size: 1.15em; font-weight: bold; color: #232946; margin-bottom: 18px; }
         .form-label { font-weight: 500; color: #232946; margin-bottom: 8px; display: block; }
         .settings-input { width: 100%; padding: 12px 10px; border-radius: 7px; border: 1px solid #e5e9f2; font-size: 1.08em; margin-bottom: 18px; }
@@ -54,7 +54,7 @@
 <div class="dashboard-container">
     <div class="sidebar">
         <div>
-            <div class="logo">Admin Panel</div>
+            <div class="logo">Admin Panel<br><span style='font-size:0.7em;font-weight:400;'>Belajar Hijaiyah</span></div>
             <nav>
                 <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 <a href="<?php echo site_url('dashboard/pengguna'); ?>">Manajemen User</a>
