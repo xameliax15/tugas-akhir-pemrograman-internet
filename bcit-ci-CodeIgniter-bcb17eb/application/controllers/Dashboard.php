@@ -155,7 +155,8 @@ class Dashboard extends CI_Controller {
 
     public function belajar() {
         $this->load->model('Hijaiyah_model');
-        $data['huruf'] = $this->Hijaiyah_model->get_all();
+        $huruf = $this->Hijaiyah_model->get_all();
+        $data['huruf'] = $huruf;
         $data['user'] = $this->session->userdata('user');
         $this->load->view('belajar_view', $data);
     }
@@ -225,5 +226,99 @@ class Dashboard extends CI_Controller {
             ]);
         }
         echo json_encode(['success'=>true]);
+    }
+
+    public function kasrah() {
+        $this->load->model('Hijaiyah_model');
+        $huruf = $this->Hijaiyah_model->get_all();
+        $harakat = 'ِ'; // kasrah
+        $pelafalan_kasrah = [
+            'Alif' => 'i',
+            'Ba' => 'bi',
+            'Ta' => 'ti',
+            'Tsa' => 'tsi',
+            'Jim' => 'ji',
+            'Ha' => 'hi',
+            'Kha' => 'khi',
+            'Dal' => 'di',
+            'Dzal' => 'dzi',
+            'Ra' => 'ri',
+            'Zai' => 'zi',
+            'Sin' => 'si',
+            'Syin' => 'syi',
+            'Shad' => 'shi',
+            'Dhad' => 'dhi',
+            'Tha' => 'thi',
+            'Zha' => 'zhi',
+            'Ain' => 'i',
+            'Ghain' => 'ghi',
+            'Fa' => 'fi',
+            'Qaf' => 'qi',
+            'Kaf' => 'ki',
+            'Lam' => 'li',
+            'Mim' => 'mi',
+            'Nun' => 'ni',
+            'Wau' => 'wi',
+            'Ha' => 'hi',
+            'Ya' => 'yi',
+        ];
+        $huruf_kasrah = array_map(function($h) use ($harakat, $pelafalan_kasrah) {
+            $h['Huruf_Harakat'] = $h['Huruf_1'] . $harakat;
+            $nama = $h['Huruf_2'];
+            $lafal = isset($pelafalan_kasrah[$nama]) ? $pelafalan_kasrah[$nama] : $h['H_sound'].'i';
+            $h['Penjelasan_Harakat'] = 'Huruf ' . $nama . ' dengan tanda Kasrah dibaca "' . $lafal . '" sesuai standar tajwid.';
+            $h['Bunyi_Harakat'] = $lafal;
+            return $h;
+        }, $huruf);
+        $data['huruf'] = $huruf_kasrah;
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('belajar_kasrah_view', $data);
+    }
+
+    public function dhammah() {
+        $this->load->model('Hijaiyah_model');
+        $huruf = $this->Hijaiyah_model->get_all();
+        $harakat = 'ُ'; // dhammah
+        $pelafalan_dhammah = [
+            'Alif' => 'u',
+            'Ba' => 'bu',
+            'Ta' => 'tu',
+            'Tsa' => 'tsu',
+            'Jim' => 'ju',
+            'Ha' => 'hu',
+            'Kha' => 'khu',
+            'Dal' => 'du',
+            'Dzal' => 'dzu',
+            'Ra' => 'ru',
+            'Zai' => 'zu',
+            'Sin' => 'su',
+            'Syin' => 'syu',
+            'Shad' => 'shu',
+            'Dhad' => 'dhu',
+            'Tha' => 'thu',
+            'Zha' => 'zhu',
+            'Ain' => 'u',
+            'Ghain' => 'ghu',
+            'Fa' => 'fu',
+            'Qaf' => 'qu',
+            'Kaf' => 'ku',
+            'Lam' => 'lu',
+            'Mim' => 'mu',
+            'Nun' => 'nu',
+            'Wau' => 'wu',
+            'Ha' => 'hu',
+            'Ya' => 'yu',
+        ];
+        $huruf_dhammah = array_map(function($h) use ($harakat, $pelafalan_dhammah) {
+            $h['Huruf_Harakat'] = $h['Huruf_1'] . $harakat;
+            $nama = $h['Huruf_2'];
+            $lafal = isset($pelafalan_dhammah[$nama]) ? $pelafalan_dhammah[$nama] : $h['H_sound'].'u';
+            $h['Penjelasan_Harakat'] = 'Huruf ' . $nama . ' dengan tanda Dhammah dibaca "' . $lafal . '" sesuai standar tajwid.';
+            $h['Bunyi_Harakat'] = $lafal;
+            return $h;
+        }, $huruf);
+        $data['huruf'] = $huruf_dhammah;
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('belajar_dhammah_view', $data);
     }
 } 
