@@ -7,6 +7,8 @@ class Auth extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
         $this->load->model('User_model');
+        // Maintenance mode check: hanya blokir akses ke halaman lain, bukan login
+        // (Pengecekan setelah login akan dilakukan di method login)
     }
 
     public function index() {
@@ -25,6 +27,13 @@ class Auth extends CI_Controller {
             if (password_verify($password, $user['Password'])) {
                 $this->session->set_userdata('logged_in', true);
                 $this->session->set_userdata('user', $user);
+                $this->load->model('Pengaturan_model');
+                $maintenance = $this->Pengaturan_model->get('maintenance_mode');
+                if ($maintenance === '1' && $user['role'] !== 'admin') {
+                    // User login saat maintenance: tampilkan halaman maintenance
+                    include APPPATH.'views/maintenance_view.php';
+                    exit;
+                }
                 if ($user['role'] === 'admin') {
                 redirect(site_url('dashboard'));
                 } else {

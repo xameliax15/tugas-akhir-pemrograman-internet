@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) { session_start(); } $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'light'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,9 +61,34 @@
         .modal .close-btn:hover { background: #a21caf; }
         @media (max-width: 900px) { .main-row, .main-action-row, .stats-row, .quick-access-row { flex-direction: column; gap: 12px; } .container { padding: 0 2vw; } }
         .logout-btn:hover { background: #c0392b; }
+        <?php if($theme==='dark'): ?>
+        body { background: #181a20; color: #e5e7eb; }
+        .navbar { background: linear-gradient(90deg, #232946 0%, #3b3f5c 100%); color: #ffe066; }
+        .navbar .logo-icon { background: #232946; color: #ffe066; }
+        .navbar .nav-btn, .navbar .profile-btn { background: #232946; color: #ffe066; }
+        .navbar .nav-btn.active, .navbar .nav-btn:hover { background: #232946; color: #a7f3d0; }
+        .container { background: #181a20; color: #e5e7eb; }
+        .stat-card, .stat-card.blue, .stat-card.purple, .stat-card.pink { background: #232946 !important; color: #ffe066; box-shadow: 0 2px 12px #23294633; }
+        .stat-card .stat-label { color: #a7f3d0; }
+        .progress-section, .activity-section, .main-action-card, .main-action-card.blue, .challenge-card { background: #232946 !important; color: #ffe066; box-shadow: 0 2px 12px #23294633; }
+        .progress-title, .activity-title { color: #ffe066; }
+        .progress-bar-bg { background: #3b3f5c; }
+        .progress-bar-fill { background: linear-gradient(90deg, #ffe066 60%, #f472b6 100%); }
+        .progress-info-row, .progress-info-row .star { color: #a7f3d0; }
+        .main-action-card .action-btn, .main-action-card.blue .action-btn, .challenge-btn { background: #181a20 !important; color: #ffe066 !important; border: 2px solid #ffe066; }
+        .main-action-card .action-btn:hover, .main-action-card.blue .action-btn:hover, .challenge-btn:hover { background: #ffe066 !important; color: #232946 !important; }
+        .quick-btn { background: #232946; color: #ffe066; box-shadow: 0 2px 8px #23294633; }
+        .quick-btn:hover { background: #3b3f5c; color: #a7f3d0; }
+        .modal { background: #232946; color: #ffe066; }
+        .modal .close-btn { background: #f472b6; color: #fff; }
+        .modal .close-btn:hover { background: #a21caf; }
+        .activity-feed li { color: #ffe066; }
+        .logout-btn { background: #ef4444 !important; color: #fff !important; }
+        .logout-btn:hover { background: #a21caf !important; color: #fff !important; }
+        <?php endif; ?>
     </style>
 </head>
-<body>
+<body<?php if($theme==='dark') echo ' style="background:#181a20;color:#e5e7eb;"'; ?>>
     <div class="navbar">
         <div class="logo"><span class="logo-icon">ح</span> Belajar Hijaiyah</div>
         <div class="nav-btns">
@@ -131,12 +157,12 @@
             <div class="main-action-card">
                 <div class="action-title">Lanjutkan Belajar</div>
                 <div class="action-desc">Pelajari huruf Dal, Dzal, Ra selanjutnya<br><span style="color:#fff;opacity:0.8;font-size:0.98em;">Progress: 12/28 huruf</span></div>
-                <button class="action-btn">Mulai Belajar</button>
+                <button class="action-btn" onclick="window.location.href='<?php echo site_url('dashboard/belajar'); ?>'">Mulai Belajar</button>
             </div>
             <div class="main-action-card blue">
                 <div class="action-title">Latihan Kuis</div>
                 <div class="action-desc">Uji kemampuan dengan kuis huruf yang sudah dipelajari<br><span style="color:#fff;opacity:0.8;font-size:0.98em;">Skor terbaik: 8/10</span></div>
-                <button class="action-btn">Mulai Kuis</button>
+                <button class="action-btn" onclick="window.location.href='<?php echo site_url('dashboard/quiz'); ?>'">Mulai Kuis</button>
             </div>
         </div>
         <div class="challenge-card">
@@ -144,10 +170,10 @@
             <button class="challenge-btn">Terima Tantangan</button>
         </div>
         <div class="quick-access-row">
-            <button class="quick-btn" onclick="showModal('profile')"><span>👤</span> Profile</button>
+            <button class="quick-btn" onclick="showProfileModal()"><span>👤</span> Profile</button>
             <button class="quick-btn" onclick="showModal('leaderboard')"><span>🏆</span> Leaderboard</button>
             <button class="quick-btn" onclick="showModal('achievements')"><span>🎖️</span> Pencapaian</button>
-            <button class="quick-btn" onclick="showModal('settings')"><span>⚙️</span> Pengaturan</button>
+            <button class="quick-btn" onclick="window.location.href='<?php echo site_url('dashboard/user_settings'); ?>'"><span>⚙️</span> Pengaturan</button>
         </div>
     </div>
     <!-- Modal Dummy -->
@@ -219,6 +245,18 @@
         }
         function closeModal() {
             document.getElementById('modal-bg').classList.remove('active');
+        }
+        function showProfileModal() {
+            document.getElementById('modal-bg').classList.add('active');
+            document.getElementById('modal-title').textContent = 'Profil Pengguna';
+            document.getElementById('modal-body').innerHTML = `
+                <b>Nama:</b> <?php echo htmlspecialchars($user['Nama']); ?><br>
+                <b>Username:</b> <?php echo htmlspecialchars($user['Username']); ?><br>
+                <b>Level:</b> Pemula Aktif<br>
+                <b>Kuis Selesai:</b> <?php echo $kuis_selesai; ?><br>
+                <b>Skor Terbaik:</b> <?php echo $skor_terbaik; ?>/10<br>
+                <b>Total Poin:</b> <?php echo $total_poin; ?>
+            `;
         }
     </script>
 </body>

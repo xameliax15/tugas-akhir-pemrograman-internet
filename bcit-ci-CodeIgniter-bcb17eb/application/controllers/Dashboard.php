@@ -48,19 +48,6 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard_view', $data);
     }
 
-    public function hijaiyah() {
-        $this->load->model('Hijaiyah_model');
-        if ($this->input->post('add_huruf')) {
-            $huruf1 = $this->input->post('huruf1');
-            $huruf2 = $this->input->post('huruf2');
-            $h_sound = $this->input->post('h_sound');
-            $this->Hijaiyah_model->insert_huruf($huruf1, $huruf2, $h_sound);
-            redirect('dashboard/hijaiyah');
-        }
-        $data['huruf'] = $this->Hijaiyah_model->get_all();
-        $this->load->view('hijaiyah_view', $data);
-    }
-
     public function pengguna() {
         $this->load->model('User_model');
         $data['pengguna'] = $this->User_model->get_all();
@@ -164,22 +151,6 @@ class Dashboard extends CI_Controller {
     public function quiz() {
         $data['user'] = $this->session->userdata('user');
         $this->load->view('quiz_view', $data);
-    }
-
-    public function seed_huruf_hijaiyah() {
-        $user = $this->session->userdata('user');
-        if (!$user || $user['role'] !== 'admin') { show_404(); return; }
-        $this->load->model('Hijaiyah_model');
-        $huruf = [
-            ['ا','Alif','a'],['ب','Ba','ba'],['ت','Ta','ta'],['ث','Tsa','tsa'],['ج','Jim','ja'],['ح','Ha','ha'],['خ','Kha','kha'],
-            ['د','Dal','da'],['ذ','Dzal','dza'],['ر','Ra','ra'],['ز','Zai','za'],['س','Sin','sa'],['ش','Syin','sya'],['ص','Shad','sha'],
-            ['ض','Dhad','dha'],['ط','Tha','tha'],['ظ','Zha','zha'],['ع','Ain','a'],['غ','Ghain','gha'],['ف','Fa','fa'],['ق','Qaf','qa'],
-            ['ك','Kaf','ka'],['ل','Lam','la'],['م','Mim','ma'],['ن','Nun','na'],['و','Wau','wa'],['ه','Ha','ha'],['ي','Ya','ya']
-        ];
-        foreach($huruf as $h) {
-            $this->Hijaiyah_model->insert_huruf($h[0], $h[1], $h[2]);
-        }
-        echo 'Berhasil menambahkan 28 huruf hijaiyah!';
     }
 
     public function save_quiz_result() {
@@ -320,5 +291,94 @@ class Dashboard extends CI_Controller {
         $data['huruf'] = $huruf_dhammah;
         $data['user'] = $this->session->userdata('user');
         $this->load->view('belajar_dhammah_view', $data);
+    }
+
+    public function user_settings() {
+        $data['user'] = $this->session->userdata('user');
+        $this->load->view('user_settings_view', $data);
+    }
+
+    public function update_profile() {
+        if (!$this->session->userdata('logged_in')) { show_404(); return; }
+        $this->load->model('User_model');
+        $user = $this->session->userdata('user');
+        $user_id = $user['P_id'];
+        $nama = $this->input->post('nama');
+        $username = $this->input->post('username');
+        $data['user'] = $user;
+        $data['success'] = null;
+        $data['error'] = null;
+        if (!$nama) {
+            $data['error'] = 'Nama tidak boleh kosong.';
+        } else {
+            $this->User_model->update_user($user_id, $nama, $username);
+            $user['Nama'] = $nama;
+            if ($username) $user['Username'] = $username;
+            $this->session->set_userdata('user', $user);
+            $data['user'] = $user;
+            $data['success'] = 'Profil berhasil diperbarui.';
+        }
+        $this->load->view('user_settings_view', $data);
+    }
+
+    public function change_password() {
+        if (!$this->session->userdata('logged_in')) { show_404(); return; }
+        $this->load->model('User_model');
+        $user = $this->session->userdata('user');
+        $user_id = $user['P_id'];
+        $old_password = $this->input->post('old_password');
+        $new_password = $this->input->post('new_password');
+        $confirm_password = $this->input->post('confirm_password');
+        $data['user'] = $user;
+        $data['success'] = null;
+        $data['error'] = null;
+        if (!$old_password || !$new_password || !$confirm_password) {
+            $data['error'] = 'Semua field harus diisi.';
+        } else if ($new_password !== $confirm_password) {
+            $data['error'] = 'Konfirmasi password tidak cocok.';
+        } else if (strlen($new_password) < 6) {
+            $data['error'] = 'Password baru minimal 6 karakter.';
+        } else {
+            // Cek password lama
+            $user_db = $this->User_model->get_by_id($user_id);
+            if (!password_verify($old_password, $user_db['Password'])) {
+                $data['error'] = 'Password lama salah.';
+            } else {
+                $hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $this->User_model->update_password($user_id, $hash);
+                $data['success'] = 'Password berhasil diubah.';
+                // Update session user
+                $user['Password'] = $hash;
+                $this->session->set_userdata('user', $user);
+            }
+        }
+        $this->load->view('user_settings_view', $data);
+    }
+
+    public function update_theme() {
+        if (!$this->session->userdata('logged_in')) { show_404(); return; }
+        $theme = $this->input->post('theme');
+        if ($theme !== 'dark' && $theme !== 'light') $theme = 'light';
+        $this->session->set_userdata('theme', $theme);
+        redirect('dashboard/user_settings');
+    }
+
+    public function update_language() {
+        if (!$this->session->userdata('logged_in')) { show_404(); return; }
+        $lang = $this->input->post('language');
+        if ($lang !== 'en' && $lang !== 'id') $lang = 'id';
+        $this->session->set_userdata('language', $lang);
+        redirect('dashboard/user_settings');
+    }
+
+    public function delete_account() {
+        if (!$this->session->userdata('logged_in')) { show_404(); return; }
+        $this->load->model('User_model');
+        $user = $this->session->userdata('user');
+        $user_id = $user['P_id'];
+        $this->User_model->delete_user($user_id);
+        $this->session->unset_userdata('logged_in');
+        $this->session->unset_userdata('user');
+        redirect('auth');
     }
 } 

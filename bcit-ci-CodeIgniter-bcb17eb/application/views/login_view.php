@@ -1,224 +1,231 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login - Hijaiyah</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;400&display=swap" rel="stylesheet">
+    <title>Pembelajaran Hijaiyah - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #7b6cf6 0%, #6c2eb7 100%);
-            font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 0;
+            /* Bright, cheerful gradient */
+            background: linear-gradient(120deg, #ffe066 0%, #a7f3d0 50%, #7b6cf6 100%);
+            font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+            position: relative;
         }
-        .login-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(44, 44, 84, 0.13);
-            padding: 40px 36px 32px 36px;
-            width: 100%;
-            max-width: 420px;
-            margin: 40px 0;
+        /* Pattern: Polkadot bubble */
+        .pattern-dot {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.25;
+            z-index: 0;
+        }
+        .pattern-dot.d1 { width: 80px; height: 80px; left: 8vw; top: 12vh; background: #fffbe6; }
+        .pattern-dot.d2 { width: 50px; height: 50px; right: 10vw; top: 18vh; background: #fca5a5; }
+        .pattern-dot.d3 { width: 60px; height: 60px; left: 20vw; bottom: 10vh; background: #a7f3d0; }
+        .pattern-dot.d4 { width: 40px; height: 40px; right: 18vw; bottom: 8vh; background: #ffe066; }
+        .pattern-dot.d5 { width: 30px; height: 30px; left: 50vw; top: 8vh; background: #7b6cf6; }
+        .pattern-dot.d6 { width: 35px; height: 35px; right: 30vw; bottom: 18vh; background: #fffbe6; }
+        .login-container {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-sizing: border-box;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .login-box {
+            background: rgba(255,255,255,0.92);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(123,108,246,0.13);
+            padding: 2.5em 2.2em 2em 2.2em;
+            min-width: 320px;
+            max-width: 96vw;
+            text-align: left;
+            margin: 0 auto;
         }
         .login-title {
             font-size: 2em;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
+            font-weight: 800;
+            color: #5f5be3;
+            margin-bottom: 0.2em;
             text-align: center;
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 8px rgba(44,44,84,0.08);
         }
         .login-subtitle {
-            color: #e0e7ff;
-            font-size: 1.08em;
-            margin-bottom: 24px;
+            color: #7b809a;
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
             text-align: center;
         }
-        .login-form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .form-label {
-            font-weight: 500;
+        label {
+            font-size: 1.08em;
+            font-weight: 700;
             color: #232946;
-            margin-bottom: 2px;
-            font-size: 0.97em;
+            margin-bottom: 0.3em;
+            display: block;
         }
         .input-group {
             position: relative;
+            margin-bottom: 1.1em;
         }
-        .login-input {
-            width: 100%;
-            padding: 10px 40px 10px 14px;
-            border: 1.5px solid #e5e9f2;
-            border-radius: 8px;
-            background: #f8fafc;
-            font-size: 1em;
-            outline: none;
-            transition: border 0.2s;
-            box-sizing: border-box;
-        }
-        .login-input:focus {
-            border-color: #7b6cf6;
-        }
-        .login-input::placeholder {
-            color: #b4b8d0;
-            font-size: 0.97em;
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25em;
+            color: #7b6cf6;
+            opacity: 0.85;
+            pointer-events: none;
         }
         .toggle-password {
             position: absolute;
             right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            cursor: pointer;
+            font-size: 1.18em;
             color: #7b809a;
-            font-size: 1.1em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            padding: 0;
+            opacity: 0.8;
         }
-        .login-row {
+        .toggle-password:hover { color: #5f5be3; opacity: 1; }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 0.8em 2.5em 0.8em 2.5em;
+            border-radius: 10px;
+            border: 1.5px solid #d1d5db;
+            font-size: 1.08em;
+            font-family: inherit;
+            background: #fff;
+            color: #232946;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #7b6cf6;
+            background: #f3e8ff;
+        }
+        .login-actions {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2px;
+            margin-bottom: 1.2em;
         }
-        .remember-me {
+        .login-actions label {
+            font-size: 1em;
+            font-weight: 500;
+            color: #5f5be3;
+            margin: 0;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.95em;
-            color: #7b809a;
+        }
+        .login-actions input[type="checkbox"] {
+            margin-right: 0.5em;
         }
         .forgot-link {
-            color: #a78bfa;
-            font-size: 0.95em;
+            color: #a7a7c7;
+            font-size: 0.98em;
             text-decoration: none;
             transition: color 0.2s;
         }
-        .forgot-link:hover {
-            color: #6c2eb7;
-        }
+        .forgot-link:hover { color: #5f5be3; }
         .login-btn {
             width: 100%;
-            padding: 11px 0;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #a78bfa 0%, #3b82f6 100%);
+            background: linear-gradient(90deg, #7b6cf6 0%, #5f5be3 100%);
             color: #fff;
-            font-size: 1.08em;
-            font-weight: 600;
-            margin-top: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(123,108,246,0.08);
-            transition: background 0.2s;
-        }
-        .login-btn:hover {
-            background: linear-gradient(90deg, #7b6cf6 0%, #2563eb 100%);
-        }
-        .divider {
-            width: 100%;
             border: none;
-            border-top: 1.2px solid #e5e9f2;
-            margin: 14px 0 10px 0;
+            border-radius: 10px;
+            padding: 0.9em 0;
+            font-size: 1.15em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 1em;
+            box-shadow: 0 2px 8px rgba(123,108,246,0.10);
+            transition: background 0.2s, transform 0.2s;
         }
+        .login-btn:hover { background: linear-gradient(90deg, #5f5be3 0%, #7b6cf6 100%); transform: scale(1.03); }
         .google-btn {
             width: 100%;
-            padding: 9px 0;
-            border: 1.2px solid #e5e9f2;
-            border-radius: 8px;
             background: #fff;
-            color: #232946;
-            font-size: 1em;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            color: #5f5be3;
+            border: 2px solid #7b6cf6;
+            border-radius: 10px;
+            padding: 0.8em 0;
+            font-size: 1.08em;
+            font-weight: 700;
             cursor: pointer;
-            transition: border 0.2s, box-shadow 0.2s;
+            margin-bottom: 1em;
+            transition: background 0.2s, color 0.2s;
         }
-        .google-btn:hover {
-            border-color: #7b6cf6;
-            box-shadow: 0 2px 8px rgba(123,108,246,0.08);
-        }
-        .google-icon {
-            width: 18px;
-            height: 18px;
-            display: inline-block;
-        }
-        .signup-link {
+        .google-btn:hover { background: #f3e8ff; color: #232946; }
+        .register-link {
             text-align: center;
-            margin-top: 14px;
-            color: #7b809a;
-            font-size: 0.97em;
+            color: #a7a7c7;
+            font-size: 1em;
+            margin-top: 0.5em;
         }
-        .signup-link a {
-            color: #a78bfa;
+        .register-link a {
+            color: #5f5be3;
             text-decoration: none;
-            font-weight: 500;
-            margin-left: 4px;
+            font-weight: 700;
+            margin-left: 0.2em;
         }
-        .signup-link a:hover {
-            color: #6c2eb7;
-        }
-        .error {
-            color: #d63031;
-            text-align: center;
-            margin-bottom: 14px;
-        }
+        .register-link a:hover { text-decoration: underline; }
         @media (max-width: 600px) {
-            .login-card { max-width: 98vw; padding: 18px 4vw 14px 4vw; }
+            .login-box { padding: 1.2em 0.5em 1.2em 0.5em; min-width: 0; }
             .login-title { font-size: 1.3em; }
         }
     </style>
 </head>
 <body>
-    <div style="width:100vw;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <!-- Polkadot pattern background -->
+    <div class="pattern-dot d1"></div>
+    <div class="pattern-dot d2"></div>
+    <div class="pattern-dot d3"></div>
+    <div class="pattern-dot d4"></div>
+    <div class="pattern-dot d5"></div>
+    <div class="pattern-dot d6"></div>
+    <div class="login-container">
+        <form class="login-box" method="post" action="<?php echo site_url('auth/login'); ?>">
         <div class="login-title">Pembelajaran Hijaiyah</div>
         <div class="login-subtitle">Masuk untuk melanjutkan belajar</div>
-        <div class="login-card">
-            <?php if(isset($error)) echo '<div class="error">'.$error.'</div>'; ?>
-            <form class="login-form" method="post" action="<?php echo site_url('auth/login'); ?>">
-                <div class="form-label">Email atau Username</div>
+            <label for="username">Email atau Username</label>
                 <div class="input-group">
-                    <input class="login-input" type="text" name="username" placeholder="Masukkan email atau username" required>
+                <span class="input-icon">📧</span>
+                <input type="text" id="username" name="username" required autofocus value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
                 </div>
-                <div class="form-label">Password</div>
+            <label for="password">Password</label>
                 <div class="input-group">
-                    <input class="login-input" type="password" name="password" id="password" placeholder="Masukkan password" required>
-                    <span class="toggle-password" onclick="togglePassword()">&#128065;</span>
+                <span class="input-icon">🔒</span>
+                <input type="password" id="password" name="password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword()" tabindex="-1" aria-label="Tampilkan Password"><span id="eyeIcon">👁️</span></button>
                 </div>
-                <div class="login-row">
-                    <label class="remember-me"><input type="checkbox" name="remember"> Ingat saya</label>
+            <div class="login-actions">
+                <label><input type="checkbox" name="remember"> Ingat saya</label>
                     <a href="#" class="forgot-link">Lupa password?</a>
-                </div>
-                <button class="login-btn" type="submit">Masuk</button>
-            </form>
-            <hr class="divider">
-            <button class="google-btn" type="button" onclick="alert('Fitur login Google belum tersedia!')">
-                <svg class="google-icon" viewBox="0 0 24 24"><g><path fill="#4285F4" d="M12 12.2727V9.81818H19.0909C19.1818 10.2727 19.2727 10.8182 19.2727 11.4545C19.2727 14.0909 17.4545 16.3636 14.7273 16.3636C12.8182 16.3636 11.2727 15.0909 10.7273 13.3636H7.81818V15.8182C9.27273 18.1818 11.4545 19.6364 14.7273 19.6364C18.0909 19.6364 21 16.9091 21 13.6364C21 12.9091 20.9091 12.1818 20.8182 11.4545H12Z"/><path fill="#34A853" d="M10.7273 13.3636C10.5455 12.9091 10.4545 12.3636 10.4545 11.8182C10.4545 11.2727 10.5455 10.7273 10.7273 10.2727V7.81818H7.81818C7.27273 8.90909 7 10.0909 7 11.2727C7 12.4545 7.27273 13.6364 7.81818 14.7273L10.7273 13.3636Z"/><path fill="#FBBC05" d="M14.7273 7.63636C15.5455 7.63636 16.2727 7.90909 16.9091 8.36364L19.0909 6.18182C17.8182 5.09091 16.3636 4.36364 14.7273 4.36364C11.4545 4.36364 9.27273 6.81818 7.81818 9.18182L10.7273 10.2727C11.2727 8.54545 12.8182 7.63636 14.7273 7.63636Z"/><path fill="#EA4335" d="M14.7273 19.6364C11.4545 19.6364 9.27273 17.1818 7.81818 14.7273L10.7273 13.3636C11.2727 15.0909 12.8182 16.3636 14.7273 16.3636C16.3636 16.3636 17.8182 15.6364 19.0909 14.5455L16.9091 12.3636C16.2727 12.8182 15.5455 13.0909 14.7273 13.0909C13.0909 13.0909 11.8182 11.8182 11.8182 10.1818C11.8182 8.54545 13.0909 7.27273 14.7273 7.27273C15.5455 7.27273 16.2727 7.54545 16.9091 8L19.0909 5.81818C17.8182 4.72727 16.3636 4 14.7273 4C11.4545 4 9.27273 6.45455 7.81818 8.81818L10.7273 9.90909C11.2727 8.18182 12.8182 7.27273 14.7273 7.27273C16.3636 7.27273 17.8182 8.54545 17.8182 10.1818C17.8182 11.8182 16.3636 13.0909 14.7273 13.0909C13.0909 13.0909 11.8182 11.8182 11.8182 10.1818C11.8182 8.54545 13.0909 7.27273 14.7273 7.27273Z"/></g></svg>
-                <span style="margin-left:8px;font-size:1em;font-weight:500;letter-spacing:0.01em;">Masuk dengan Google</span>
-            </button>
-            <div class="signup-link">
-                Belum punya akun? <a href="<?php echo site_url('auth/signup'); ?>">Daftar sekarang</a>
             </div>
-        </div>
+            <button type="submit" class="login-btn">Masuk</button>
+            <button type="button" class="google-btn">Masuk dengan Google</button>
+            <div class="register-link">Belum punya akun? <a href="<?php echo site_url('auth/signup'); ?>">Daftar sekarang</a></div>
+        </form>
     </div>
     <script>
     function togglePassword() {
         var pwd = document.getElementById('password');
+        var eye = document.getElementById('eyeIcon');
         if (pwd.type === 'password') {
             pwd.type = 'text';
+            eye.textContent = '🙈';
         } else {
             pwd.type = 'password';
+            eye.textContent = '👁️';
         }
     }
     </script>

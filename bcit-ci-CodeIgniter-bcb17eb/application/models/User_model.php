@@ -103,4 +103,16 @@ class User_model extends CI_Model {
         $this->db->order_by('user_badge.tanggal_didapat', 'DESC');
         return $this->db->get()->result_array();
     }
+
+    // Update password user
+    public function update_password($user_id, $password_hash) {
+        $this->db->where('P_id', $user_id);
+        return $this->db->update('pengguna', ['Password' => $password_hash]);
+    }
+
+    // Hapus user
+    public function delete_user($user_id) {
+        $this->db->where('P_id', $user_id);
+        return $this->db->delete('pengguna');
+    }
 } 

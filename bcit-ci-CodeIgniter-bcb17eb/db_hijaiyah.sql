@@ -68,3 +68,34 @@ CREATE TABLE IF NOT EXISTS user_badge (
     badge_id INT(11),
     tanggal_didapat DATETIME
 ); 
+
+-- Insert data huruf hijaiyah
+INSERT INTO huruf_hijaiyah (Huruf_1, Huruf_2, H_sound, H_cbg, Tgl_input) VALUES
+('ا', 'Alif', 'a', 'Dasar', CURDATE()),
+('ب', 'Ba', 'ba', 'Dasar', CURDATE()),
+('ت', 'Ta', 'ta', 'Dasar', CURDATE()),
+('ث', 'Tsa', 'tsa', 'Dasar', CURDATE()),
+('ج', 'Jim', 'ja', 'Dasar', CURDATE()),
+('ح', 'Ha', 'ha', 'Dasar', CURDATE()),
+('خ', 'Kha', 'kha', 'Dasar', CURDATE()),
+('د', 'Dal', 'da', 'Dasar', CURDATE()),
+('ذ', 'Dzal', 'dza', 'Dasar', CURDATE()),
+('ر', 'Ra', 'ra', 'Dasar', CURDATE()),
+('ز', 'Zai', 'za', 'Dasar', CURDATE()),
+('س', 'Sin', 'sa', 'Dasar', CURDATE()),
+('ش', 'Syin', 'sya', 'Dasar', CURDATE()),
+('ص', 'Shad', 'sha', 'Dasar', CURDATE()),
+('ض', 'Dhad', 'dha', 'Dasar', CURDATE()),
+('ط', 'Tha', 'tha', 'Dasar', CURDATE()),
+('ظ', 'Zha', 'zha', 'Dasar', CURDATE()),
+('ع', 'Ain', 'a', 'Dasar', CURDATE()),
+('غ', 'Ghain', 'gha', 'Dasar', CURDATE()),
+('ف', 'Fa', 'fa', 'Dasar', CURDATE()),
+('ق', 'Qaf', 'qa', 'Dasar', CURDATE()),
+('ك', 'Kaf', 'ka', 'Dasar', CURDATE()),
+('ل', 'Lam', 'la', 'Dasar', CURDATE()),
+('م', 'Mim', 'ma', 'Dasar', CURDATE()),
+('ن', 'Nun', 'na', 'Dasar', CURDATE()),
+('و', 'Wau', 'wa', 'Dasar', CURDATE()),
+('ه', 'Ha', 'ha', 'Dasar', CURDATE()),
+('ي', 'Ya', 'ya', 'Dasar', CURDATE()); 
